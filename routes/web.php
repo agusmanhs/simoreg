@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\MenuController;
+use App\Http\Controllers\Admin\ProgramController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\UserMenuController;
 use App\Http\Controllers\Admin\UsersController;
@@ -40,6 +41,15 @@ Route::domain('')->group(function () { // development
         # APPS 
 
         # MENU MASTER DATA 
+        Route::group(['prefix' => '/program'], function () {
+            Route::get('/', [ProgramController::class, 'index'])->name('program.index');
+            Route::get('/data', [ProgramController::class, 'data'])->name('program.data');
+            Route::get('/create', [ProgramController::class, 'create'])->name('program.create');
+            Route::post('/store', [ProgramController::class, 'store'])->name('program.store');
+            Route::get('/{id}/edit', [ProgramController::class, 'edit'])->name('program.edit');
+            Route::put('/{id}', [ProgramController::class, 'update'])->name('program.update');
+            Route::delete('/{id}', [ProgramController::class, 'destroy'])->name('program.delete');
+        });
 
         # USER SETTING
         Route::group(['prefix' => '/roles'], function () {
