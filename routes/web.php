@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\KegiatanController;
 use App\Http\Controllers\Admin\MenuController;
 use App\Http\Controllers\Admin\ProgramController;
 use App\Http\Controllers\Admin\RoleController;
@@ -49,6 +50,16 @@ Route::domain('')->group(function () { // development
             Route::get('/{id}/edit', [ProgramController::class, 'edit'])->name('program.edit');
             Route::put('/{id}', [ProgramController::class, 'update'])->name('program.update');
             Route::delete('/{id}', [ProgramController::class, 'destroy'])->name('program.delete');
+        });
+
+        Route::group(['prefix' => '/kegiatan'], function () {
+            Route::get('/', [KegiatanController::class, 'index'])->name('kegiatan.index');
+            Route::get('/data', [KegiatanController::class, 'data'])->name('kegiatan.data');
+            Route::get('/create', [KegiatanController::class, 'create'])->name('kegiatan.create');
+            Route::post('/store', [KegiatanController::class, 'store'])->name('kegiatan.store');
+            Route::get('/{id}/edit', [KegiatanController::class, 'edit'])->name('kegiatan.edit');
+            Route::put('/{id}', [KegiatanController::class, 'update'])->name('kegiatan.update');
+            Route::delete('/{id}', [KegiatanController::class, 'destroy'])->name('kegiatan.delete');
         });
 
         # USER SETTING

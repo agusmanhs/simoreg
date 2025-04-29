@@ -3,12 +3,12 @@
 <!--begin::Head-->
 
 <head>
-    <title>Admin Apps - BPFK Makassar</title>
+    <title>Admin Apps - SIMOREG</title>
     <meta charset="utf-8" />
-    <meta name="description" content="bpfk." />
-    <meta name="keywords" content="bpfk" />
+    <meta name="description" content="simoreg." />
+    <meta name="keywords" content="simoreg" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta property="og:title" content="BPFK Makassar" />
+    <meta property="og:title" content="SIMOREG Makassar" />
     <meta name="csrf-token" content="{{ csrf_token() }}" />
     <link rel="shortcut icon" href="{{ asset('/') }}themes/dist/assets/media/logos/favicon.ico" />
 

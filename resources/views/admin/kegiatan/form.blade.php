@@ -49,13 +49,25 @@
 
                             <!--begin::Input group-->
                             <div class="row g-9 mb-8">
+                                <div class="col-md-12 fv-row">
+                                    <label class="fs-6 fw-semibold mb-2">Nama Program</label>
+                                    <select class="form-select" data-control="select2" data-hide-search="true"
+                                        data-placeholder="Select a Program" name="parent" id="parent">
+                                        <option value="">Select Program...</option>
+                                        @foreach (Helper::getData('programs')->all() as $v)
+                                            <option {{ isset($data->id) && $data->id == $v->id ? 'selected' : '' }}
+                                                value="{{ $v->id }}">{{ $v->nama }}
+                                                {{ $v->nama ?? null }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
                                 <div class="col-md-4 fv-row">
                                     <label class="fs-6 fw-semibold mb-2">Kode</label>
                                     <input type="text" class="form-control" placeholder="Kode Level" name="kode"
                                         id="kode" maxlength="20" value="{{ $data->kode ?? '' }}" />
                                 </div>
                                 <div class="col-md-8 fv-row">
-                                    <label class="fs-6 fw-semibold mb-2">Nama Program</label>
+                                    <label class="fs-6 fw-semibold mb-2">Nama Kegiatan</label>
                                     <input type="text" class="form-control" placeholder="Nama Level" name="nama"
                                         id="nama" value="{{ $data->nama ?? '' }}" />
                                 </div>
