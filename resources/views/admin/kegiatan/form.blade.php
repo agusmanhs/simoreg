@@ -52,17 +52,18 @@
                                 <div class="col-md-12 fv-row">
                                     <label class="fs-6 fw-semibold mb-2">Nama Program</label>
                                     <select class="form-select" data-control="select2" data-hide-search="true"
-                                        data-placeholder="Select a Program" name="parent" id="parent">
+                                        data-placeholder="Select a Program" name="program_id" id="program_id">
                                         <option value="">Select Program...</option>
                                         @foreach (Helper::getData('programs')->all() as $v)
-                                            <option {{ isset($data->id) && $data->id == $v->id ? 'selected' : '' }}
-                                                value="{{ $v->id }}">{{ $v->nama }}
-                                                {{ $v->nama ?? null }}</option>
+                                            <option
+                                                {{ isset($data->program_id) && $data->program_id == $v->id ? 'selected' : '' }}
+                                                value="{{ $v->id }}">{{ $v->kode }} || {{ $v->nama }}
+                                            </option>
                                         @endforeach
                                     </select>
                                 </div>
                                 <div class="col-md-4 fv-row">
-                                    <label class="fs-6 fw-semibold mb-2">Kode</label>
+                                    <label class="fs-6 fw-semibold mb-2">Kode Kegiatan</label>
                                     <input type="text" class="form-control" placeholder="Kode Level" name="kode"
                                         id="kode" maxlength="20" value="{{ $data->kode ?? '' }}" />
                                 </div>

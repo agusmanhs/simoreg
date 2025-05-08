@@ -22,7 +22,7 @@ class KegiatanRepository extends BaseRepository implements KegiatanContract
 	{
 		$perPage = $criteria['per_page'] ?? 5;
 		$field = $criteria['sort_field'] ?? 'id';
-		$sortOrder = $criteria['sort_order'] ?? 'desc';
+		$sortOrder = $criteria['sort_order'] ?? 'asc';
 		return $this->model->orderBy($field, $sortOrder)->paginate($perPage);
 	}
 

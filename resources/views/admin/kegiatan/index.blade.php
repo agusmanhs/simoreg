@@ -44,11 +44,14 @@
                                 <th class="min-w-20px pe-2">
                                     No
                                 </th>
+                                <th class="min-w-200px">
+                                    Nama Program
+                                </th>
                                 <th class="min-w-75px">
-                                    Kode
+                                    Kode {{ $title }}
                                 </th>
                                 <th class="min-w-200px">
-                                    Nama
+                                    Nama {{ $title }}
                                 </th>
                                 <th class="text-end min-w-70px">
                                     Actions

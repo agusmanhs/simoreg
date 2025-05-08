@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\KegiatanController;
+use App\Http\Controllers\Admin\KroController;
 use App\Http\Controllers\Admin\MenuController;
 use App\Http\Controllers\Admin\ProgramController;
 use App\Http\Controllers\Admin\RoleController;
@@ -32,9 +33,12 @@ Route::domain('')->group(function () { // development
 
     Route::get('/logout', [Auths::class, 'logout'])->middleware('auth');
 
+    // OPTION LIST
+    Route::get('/kegiatan/list/{id}',  [KegiatanController::class, 'list'])->name('kegiatan.list');   
+    Route::get('/kro/list/{id}',  [KroController::class, 'list'])->name('kro.list');   
 
     // ADMIN_ROUTES
-    Route::group(['prefix' => 'admin',   'middleware' => ['web']], function () {
+    Route::group(['prefix' => 'admin',   'middleware' => ['auth']], function () {
 
         Route::get('/', [DashboardController::class, 'index'])->name('admin');
 
@@ -50,6 +54,7 @@ Route::domain('')->group(function () { // development
             Route::get('/{id}/edit', [ProgramController::class, 'edit'])->name('program.edit');
             Route::put('/{id}', [ProgramController::class, 'update'])->name('program.update');
             Route::delete('/{id}', [ProgramController::class, 'destroy'])->name('program.delete');
+
         });
 
         Route::group(['prefix' => '/kegiatan'], function () {
@@ -60,6 +65,17 @@ Route::domain('')->group(function () { // development
             Route::get('/{id}/edit', [KegiatanController::class, 'edit'])->name('kegiatan.edit');
             Route::put('/{id}', [KegiatanController::class, 'update'])->name('kegiatan.update');
             Route::delete('/{id}', [KegiatanController::class, 'destroy'])->name('kegiatan.delete');
+
+        });
+
+        Route::group(['prefix' => '/kro'], function () {
+            Route::get('/', [KroController::class, 'index'])->name('kro.index');
+            Route::get('/data', [KroController::class, 'data'])->name('kro.data');
+            Route::get('/create', [KroController::class, 'create'])->name('kro.create');
+            Route::post('/store', [KroController::class, 'store'])->name('kro.store');
+            Route::get('/{id}/edit', [KroController::class, 'edit'])->name('kro.edit');
+            Route::put('/{id}', [KroController::class, 'update'])->name('kro.update');
+            Route::delete('/{id}', [KroController::class, 'destroy'])->name('kro.delete');
         });
 
         # USER SETTING
@@ -105,3 +121,10 @@ Route::domain('')->group(function () { // development
         });
     });
 });
+Route::get('/cc', function () {
+    Artisan::call('optimize:clear');
+    Artisan::call('config:cache');
+    Artisan::call('view:clear');
+    return "Cache is cleared";
+});
+

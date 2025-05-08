@@ -7,6 +7,11 @@
         </td>
         <td class="pe-0">
             <span class="fw-semibold">
+                {{ $v->program->nama }}
+            </span>
+        </td>
+        <td class="pe-0">
+            <span class="fw-semibold">
                 {{ $v->kode }}
             </span>
         </td>

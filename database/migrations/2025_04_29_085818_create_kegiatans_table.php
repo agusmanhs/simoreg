@@ -13,6 +13,8 @@ return new class extends Migration
     {
         Schema::create('kegiatans', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('program_id');
+            $table->foreign('program_id')->references('id')->on('programs');
             $table->string('kode', 20);
             $table->string('nama', 150);
             $table->timestamps();

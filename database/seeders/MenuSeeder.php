@@ -21,7 +21,14 @@ class MenuSeeder extends Seeder
 
             ['name' => 'Permohonan Masuk', 'icon' => 'bi-stack', 'url' => 'permohonan-masuk', 'index' => 1, 'main_menu' => 'APPS', 'active' => '1', 'parent' => '1'],
 
-            ['name' => 'Daftar Kemanpuan', 'icon' => 'bi-stack', 'url' => 'kalibrasi', 'index' => 0, 'main_menu' => 'DATA MASTER', 'active' => '1', 'parent' => '2'],
+            ['name' => 'Program', 'icon' => 'bi-stack', 'url' => 'program', 'index' => 0, 'main_menu' => 'DATA MASTER', 'active' => '1', 'parent' => '2'],
+            ['name' => 'Kegiatan', 'icon' => 'bi-stack', 'url' => 'kegiatan', 'index' => 1, 'main_menu' => 'DATA MASTER', 'active' => '1', 'parent' => '2'],
+            ['name' => 'K R O', 'icon' => 'bi-stack', 'url' => 'kro', 'index' => 2, 'main_menu' => 'DATA MASTER', 'active' => '1', 'parent' => '2'],
+            ['name' => 'R O', 'icon' => 'bi-stack', 'url' => 'ro', 'index' => 3, 'main_menu' => 'DATA MASTER', 'active' => '1', 'parent' => '2'],
+            ['name' => 'Komponen', 'icon' => 'bi-stack', 'url' => 'komponen', 'index' => 4, 'main_menu' => 'DATA MASTER', 'active' => '1', 'parent' => '2'],
+            ['name' => 'Sub Komponen', 'icon' => 'bi-stack', 'url' => 'sub-komponen', 'index' => 5, 'main_menu' => 'DATA MASTER', 'active' => '1', 'parent' => '2'],
+            ['name' => 'Kode Akun', 'icon' => 'bi-stack', 'url' => 'kode-akun', 'index' => 6, 'main_menu' => 'DATA MASTER', 'active' => '1', 'parent' => '2'],
+            ['name' => 'Detail Uraian', 'icon' => 'bi-stack', 'url' => 'uraian-detail', 'index' => 7, 'main_menu' => 'DATA MASTER', 'active' => '1', 'parent' => '2'],
 
             ['name' => 'User', 'icon' => 'bi-people-fill', 'url' => 'users', 'index' => 0, 'main_menu' => 'USERS', 'active' => '1', 'parent' => '3'],
 

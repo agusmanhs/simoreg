@@ -101,6 +101,38 @@
 
 @push('jsScriptForm')
     <script type="text/javascript">
+        $('#provinsi').on('change', function() {
+            var id = $("#provinsi").val();
+            if (id != null) {
+                $.ajax({
+                    type: 'GET',
+                    url: "kantor/get-kabupaten/" + id,
+                    dataType: 'json',
+                    success: function(data) {
+                        let kabupatenID = $('#kabupatenID').val();
+                        var select = document.getElementById("kabupaten");
+                        select.options.length = null;
+                        $('#kabupaten').append(
+                            `<option value="" disabled selected> -- Pilih Kabupaten --</option>`)
+                        for (var i = 0; i < data.length; i++) {
+                            $('#kabupaten').append(`<option value="` + data[i][
+                                    'kode_kabupaten'
+                                ] +
+                                `" selected>` + data[i]['nama_kabupaten'] + `</option>`);
+                        }
+                        $('#kabupaten').val(kabupatenID).trigger('change')
+                    },
+                    error: function() {
+                        iziToast.error({
+                            title: 'Failed,',
+                            message: 'Unable to display data!',
+                            position: 'topRight'
+                        });
+                    }
+                });
+            }
+        });
+
         // Define form element
         const form = document.getElementById('kt_modal_new_target_form');
 
@@ -108,14 +140,14 @@
         var validator = FormValidation.formValidation(
             form, {
                 fields: {
-                    'name': {
+                    'nama': {
                         validators: {
                             notEmpty: {
                                 message: 'Nama is required'
                             }
                         }
                     },
-                    'code': {
+                    'kode': {
                         validators: {
                             notEmpty: {
                                 message: 'Kode is required'

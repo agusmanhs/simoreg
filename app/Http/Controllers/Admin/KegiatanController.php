@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Services\Repositories\Contracts\KegiatanContract;
+use App\Models\Kegiatan;
 use Illuminate\Http\Request;
 
 class KegiatanController extends Controller
@@ -95,5 +96,11 @@ class KegiatanController extends Controller
         } catch (\Exception $e) {
             return view('errors.message', ['message' => $e->getMessage()]);
         }
+    }
+        
+    public function list($id)
+    {
+        $data = Kegiatan::where('program_id', $id)->get();
+        return $data;
     }
 }
