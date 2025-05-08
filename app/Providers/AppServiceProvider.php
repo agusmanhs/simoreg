@@ -8,6 +8,7 @@ use App\Http\Services\Repositories\Contracts\KegiatanContract;
 use App\Http\Services\Repositories\Contracts\KroContract;
 use App\Http\Services\Repositories\Contracts\MenuContract;
 use App\Http\Services\Repositories\Contracts\ProgramContract;
+use App\Http\Services\Repositories\Contracts\RoContract;
 use App\Http\Services\Repositories\Contracts\RoleContract;
 use App\Http\Services\Repositories\Contracts\UserMenuContract;
 use App\Http\Services\Repositories\Contracts\UsersContract;
@@ -16,6 +17,7 @@ use App\Http\Services\Repositories\KroRepository;
 use App\Http\Services\Repositories\MenuRepository;
 use App\Http\Services\Repositories\ProgramRepository;
 use App\Http\Services\Repositories\RoleRepository;
+use App\Http\Services\Repositories\RoRepository;
 use App\Http\Services\Repositories\UserMenuRepository;
 use App\Http\Services\Repositories\UsersRepository;
 use Illuminate\Support\ServiceProvider;
@@ -45,5 +47,6 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(ProgramContract::class, ProgramRepository::class);
         $this->app->bind(KegiatanContract::class, KegiatanRepository::class);
         $this->app->bind(KroContract::class, KroRepository::class);
+        $this->app->bind(RoContract::class, RoRepository::class);
     }
 }

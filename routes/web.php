@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\KegiatanController;
 use App\Http\Controllers\Admin\KroController;
 use App\Http\Controllers\Admin\MenuController;
 use App\Http\Controllers\Admin\ProgramController;
+use App\Http\Controllers\Admin\RoController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\UserMenuController;
 use App\Http\Controllers\Admin\UsersController;
@@ -76,6 +77,16 @@ Route::domain('')->group(function () { // development
             Route::get('/{id}/edit', [KroController::class, 'edit'])->name('kro.edit');
             Route::put('/{id}', [KroController::class, 'update'])->name('kro.update');
             Route::delete('/{id}', [KroController::class, 'destroy'])->name('kro.delete');
+        });
+        
+        Route::group(['prefix' => '/ro'], function () {
+            Route::get('/', [RoController::class, 'index'])->name('ro.index');
+            Route::get('/data', [RoController::class, 'data'])->name('ro.data');
+            Route::get('/create', [RoController::class, 'create'])->name('ro.create');
+            Route::post('/store', [RoController::class, 'store'])->name('ro.store');
+            Route::get('/{id}/edit', [RoController::class, 'edit'])->name('ro.edit');
+            Route::put('/{id}', [RoController::class, 'update'])->name('ro.update');
+            Route::delete('/{id}', [RoController::class, 'destroy'])->name('ro.delete');
         });
 
         # USER SETTING

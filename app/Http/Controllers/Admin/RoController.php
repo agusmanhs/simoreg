@@ -3,17 +3,16 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Services\Repositories\Contracts\KroContract;
-use App\Models\Kro;
+use App\Http\Services\Repositories\Contracts\RoContract;
 use Illuminate\Http\Request;
 
-class KroController extends Controller
+class RoController extends Controller
 {
     protected $title, $repo, $response;
 
-    public function __construct(KroContract $repo)
+    public function __construct(RoContract $repo)
     {
-        $this->title = 'kro';
+        $this->title = 'ro';
         $this->repo = $repo;
     }
 
@@ -96,11 +95,5 @@ class KroController extends Controller
         } catch (\Exception $e) {
             return view('errors.message', ['message' => $e->getMessage()]);
         }
-    }
-
-    public function list($id)
-    {
-        $data = Kro::where('kegiatan_id', $id)->get();
-        return $data;
     }
 }
