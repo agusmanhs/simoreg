@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\KegiatanController;
+use App\Http\Controllers\Admin\KomponenController;
 use App\Http\Controllers\Admin\KroController;
 use App\Http\Controllers\Admin\MenuController;
 use App\Http\Controllers\Admin\ProgramController;
@@ -37,6 +38,8 @@ Route::domain('')->group(function () { // development
     // OPTION LIST
     Route::get('/kegiatan/list/{id}',  [KegiatanController::class, 'list'])->name('kegiatan.list');   
     Route::get('/kro/list/{id}',  [KroController::class, 'list'])->name('kro.list');   
+    Route::get('/ro/list/{id}',  [RoController::class, 'list'])->name('ro.list');   
+    Route::get('/komponen/list/{id}',  [KomponenController::class, 'list'])->name('komponen.list');   
 
     // ADMIN_ROUTES
     Route::group(['prefix' => 'admin',   'middleware' => ['auth']], function () {
@@ -87,6 +90,16 @@ Route::domain('')->group(function () { // development
             Route::get('/{id}/edit', [RoController::class, 'edit'])->name('ro.edit');
             Route::put('/{id}', [RoController::class, 'update'])->name('ro.update');
             Route::delete('/{id}', [RoController::class, 'destroy'])->name('ro.delete');
+        });
+        
+        Route::group(['prefix' => '/komponen'], function () {
+            Route::get('/', [KomponenController::class, 'index'])->name('komponen.index');
+            Route::get('/data', [KomponenController::class, 'data'])->name('komponen.data');
+            Route::get('/create', [KomponenController::class, 'create'])->name('komponen.create');
+            Route::post('/store', [KomponenController::class, 'store'])->name('komponen.store');
+            Route::get('/{id}/edit', [KomponenController::class, 'edit'])->name('komponen.edit');
+            Route::put('/{id}', [KomponenController::class, 'update'])->name('komponen.update');
+            Route::delete('/{id}', [KomponenController::class, 'destroy'])->name('komponen.delete');
         });
 
         # USER SETTING

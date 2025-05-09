@@ -3,17 +3,17 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Services\Repositories\Contracts\RoContract;
-use App\Models\Ro;
+use App\Http\Services\Repositories\Contracts\KomponenContract;
+use App\Models\Komponen;
 use Illuminate\Http\Request;
 
-class RoController extends Controller
+class KomponenController extends Controller
 {
     protected $title, $repo, $response;
 
-    public function __construct(RoContract $repo)
+    public function __construct(KomponenContract $repo)
     {
-        $this->title = 'ro';
+        $this->title = 'komponen';
         $this->repo = $repo;
     }
 
@@ -100,8 +100,7 @@ class RoController extends Controller
 
     public function list($id)
     {
-        $data = Ro::where('kro_id', $id)->get();
+        $data = Komponen::where('ro_id', $id)->get();
         return $data;
-    }    
-
+    }  
 }
