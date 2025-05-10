@@ -8,12 +8,14 @@ use App\Http\Controllers\Admin\MenuController;
 use App\Http\Controllers\Admin\ProgramController;
 use App\Http\Controllers\Admin\RoController;
 use App\Http\Controllers\Admin\RoleController;
+use App\Http\Controllers\Admin\SubkomponenController;
 use App\Http\Controllers\Admin\UserMenuController;
 use App\Http\Controllers\Admin\UsersController;
 use Illuminate\Support\Facades\Route;
 
 
 use App\Http\Controllers\Auth\LoginController as Auths;
+use App\Models\Subkomponen;
 
 Route::get('/', function () {
     return view('welcome');
@@ -100,6 +102,16 @@ Route::domain('')->group(function () { // development
             Route::get('/{id}/edit', [KomponenController::class, 'edit'])->name('komponen.edit');
             Route::put('/{id}', [KomponenController::class, 'update'])->name('komponen.update');
             Route::delete('/{id}', [KomponenController::class, 'destroy'])->name('komponen.delete');
+        });
+        
+        Route::group(['prefix' => '/sub-komponen'], function () {
+            Route::get('/', [SubkomponenController::class, 'index'])->name('subkomponen.index');
+            Route::get('/data', [SubkomponenController::class, 'data'])->name('subkomponen.data');
+            Route::get('/create', [SubkomponenController::class, 'create'])->name('subkomponen.create');
+            Route::post('/store', [SubkomponenController::class, 'store'])->name('subkomponen.store');
+            Route::get('/{id}/edit', [SubkomponenController::class, 'edit'])->name('subkomponen.edit');
+            Route::put('/{id}', [SubkomponenController::class, 'update'])->name('subkomponen.update');
+            Route::delete('/{id}', [SubkomponenController::class, 'destroy'])->name('subkomponen.delete');
         });
 
         # USER SETTING
