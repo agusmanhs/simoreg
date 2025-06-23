@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\KegiatanController;
+use App\Http\Controllers\Admin\KodeakunController;
 use App\Http\Controllers\Admin\KomponenController;
 use App\Http\Controllers\Admin\KroController;
 use App\Http\Controllers\Admin\MenuController;
@@ -42,6 +43,8 @@ Route::domain('')->group(function () { // development
     Route::get('/kro/list/{id}',  [KroController::class, 'list'])->name('kro.list');   
     Route::get('/ro/list/{id}',  [RoController::class, 'list'])->name('ro.list');   
     Route::get('/komponen/list/{id}',  [KomponenController::class, 'list'])->name('komponen.list');   
+    Route::get('/sub-komponen/list/{id}',  [SubkomponenController::class, 'list'])->name('subkomponen.list');   
+    Route::get('/kode-akun/list/{id}',  [KodeakunController::class, 'list'])->name('kodeakun.list');   
 
     // ADMIN_ROUTES
     Route::group(['prefix' => 'admin',   'middleware' => ['auth']], function () {
@@ -112,6 +115,16 @@ Route::domain('')->group(function () { // development
             Route::get('/{id}/edit', [SubkomponenController::class, 'edit'])->name('subkomponen.edit');
             Route::put('/{id}', [SubkomponenController::class, 'update'])->name('subkomponen.update');
             Route::delete('/{id}', [SubkomponenController::class, 'destroy'])->name('subkomponen.delete');
+        });
+        
+        Route::group(['prefix' => '/kode-akun'], function () {
+            Route::get('/', [KodeakunController::class, 'index'])->name('kodeakun.index');
+            Route::get('/data', [KodeakunController::class, 'data'])->name('kodeakun.data');
+            Route::get('/create', [KodeakunController::class, 'create'])->name('kodeakun.create');
+            Route::post('/store', [KodeakunController::class, 'store'])->name('kodeakun.store');
+            Route::get('/{id}/edit', [KodeakunController::class, 'edit'])->name('kodeakun.edit');
+            Route::put('/{id}', [KodeakunController::class, 'update'])->name('kodeakun.update');
+            Route::delete('/{id}', [KodeakunController::class, 'destroy'])->name('kodeakun.delete');
         });
 
         # USER SETTING

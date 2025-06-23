@@ -5,6 +5,7 @@ namespace App\Providers;
 use App\Http\Services\Repositories\BaseRepository;
 use App\Http\Services\Repositories\Contracts\BaseContract;
 use App\Http\Services\Repositories\Contracts\KegiatanContract;
+use App\Http\Services\Repositories\Contracts\KodeakunContract;
 use App\Http\Services\Repositories\Contracts\KomponenContract;
 use App\Http\Services\Repositories\Contracts\KroContract;
 use App\Http\Services\Repositories\Contracts\MenuContract;
@@ -15,6 +16,7 @@ use App\Http\Services\Repositories\Contracts\SubkomponenContract;
 use App\Http\Services\Repositories\Contracts\UserMenuContract;
 use App\Http\Services\Repositories\Contracts\UsersContract;
 use App\Http\Services\Repositories\KegiatanRepository;
+use App\Http\Services\Repositories\KodeakunRepository;
 use App\Http\Services\Repositories\KomponenRepository;
 use App\Http\Services\Repositories\KroRepository;
 use App\Http\Services\Repositories\MenuRepository;
@@ -54,5 +56,6 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(RoContract::class, RoRepository::class);
         $this->app->bind(KomponenContract::class, KomponenRepository::class);
         $this->app->bind(SubkomponenContract::class, SubkomponenRepository::class);
+        $this->app->bind(KodeakunContract::class, KodeakunRepository::class);
     }
 }
