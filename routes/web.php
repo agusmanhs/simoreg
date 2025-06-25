@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\DetailuraianController;
 use App\Http\Controllers\Admin\KegiatanController;
 use App\Http\Controllers\Admin\KodeakunController;
 use App\Http\Controllers\Admin\KomponenController;
@@ -125,6 +126,16 @@ Route::domain('')->group(function () { // development
             Route::get('/{id}/edit', [KodeakunController::class, 'edit'])->name('kodeakun.edit');
             Route::put('/{id}', [KodeakunController::class, 'update'])->name('kodeakun.update');
             Route::delete('/{id}', [KodeakunController::class, 'destroy'])->name('kodeakun.delete');
+        });
+
+        Route::group(['prefix' => '/detail-uraian'], function () {
+            Route::get('/', [DetailuraianController::class, 'index'])->name('detailuraian.index');
+            Route::get('/data', [DetailuraianController::class, 'data'])->name('detailuraian.data');
+            Route::get('/create', [DetailuraianController::class, 'create'])->name('detailuraian.create');
+            Route::post('/store', [DetailuraianController::class, 'store'])->name('detailuraian.store');
+            Route::get('/{id}/edit', [DetailuraianController::class, 'edit'])->name('detailuraian.edit');
+            Route::put('/{id}', [DetailuraianController::class, 'update'])->name('detailuraian.update');
+            Route::delete('/{id}', [DetailuraianController::class, 'destroy'])->name('detailuraian.delete');
         });
 
         # USER SETTING
