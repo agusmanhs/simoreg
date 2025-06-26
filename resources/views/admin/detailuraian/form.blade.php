@@ -107,6 +107,14 @@
 
                                     </select>
                                 </div>
+                                <div class="col-md-12 fv-row">
+                                    <label class="fs-6 fw-semibold mb-2">Nama Kode Akun</label>
+                                    <select class="form-select" data-control="select2" data-hide-search="true"
+                                        data-placeholder="Select a Kode Akun" name="kodeakun_id" id="kodeakun_id">
+                                        <option value="">Select Kode Akun...</option>
+
+                                    </select>
+                                </div>
                                 <div class="col-md-4 fv-row">
                                     <label class="fs-6 fw-semibold mb-2">Kode {{ Str::ucfirst($title) }}</label>
                                     <input type="text" class="form-control" placeholder="Kode {{ Str::ucfirst($title) }}"
@@ -298,6 +306,28 @@
                 });
             } else {
                 $("#subkomponen_id").empty();
+            }
+        });
+
+        $('#subkomponen_id').change(function() {
+            var id_ro = $(this).val();
+            console.log(id_ro);
+            if (id_ro) {
+                $.ajax({
+                    type: "GET",
+                    url: "{{ url('kode-akun/list') }}/" + id_ro,
+                    success: function(result) {
+                        $('#kodeakun_id').html('<option value="">-- Unit Kerja --</option>');
+                        $.each(result, function(key, value) {
+                            $("#kodeakun_id").append('<option value="' + value.id + '">' +
+                                value
+                                .kode + ' || ' + value
+                                .nama + '</option>');
+                        });
+                    }
+                });
+            } else {
+                $("#kodeakun_id").empty();
             }
         });
 

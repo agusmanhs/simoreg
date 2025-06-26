@@ -13,7 +13,10 @@ return new class extends Migration
     {
         Schema::create('detailuraians', function (Blueprint $table) {
             $table->id();
-            $table->timestamps();
+            $table->unsignedBigInteger('kodeakun_id');
+            $table->foreign('kodeakun_id')->references('id')->on('kodeakuns');
+            $table->string('kode', 20);
+            $table->string('nama', 150);            $table->timestamps();
         });
     }
 

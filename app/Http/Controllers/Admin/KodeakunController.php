@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Services\Repositories\Contracts\KodeakunContract;
+use App\Models\Kodeakun;
 use Illuminate\Http\Request;
 
 class KodeakunController extends Controller
@@ -99,7 +100,7 @@ class KodeakunController extends Controller
 
     public function list($id)
     {
-        $data = Subkomponen::where('komponen_id', $id)->get();
+        $data = Kodeakun::where('subkomponen_id', $id)->get();
         return $data;
     }  
 }

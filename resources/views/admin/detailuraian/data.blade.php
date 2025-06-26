@@ -7,7 +7,7 @@
         </td>
         <td class="pe-0">
             <span class="fw-semibold">
-                {{ $v->komponen->nama }}
+                {{ $v->kodeakun->nama }}
             </span>
         </td>
         <td class="pe-0">
