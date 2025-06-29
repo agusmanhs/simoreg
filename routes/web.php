@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\BagsubagController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\DetailuraianController;
 use App\Http\Controllers\Admin\KegiatanController;
@@ -8,6 +9,7 @@ use App\Http\Controllers\Admin\KomponenController;
 use App\Http\Controllers\Admin\KroController;
 use App\Http\Controllers\Admin\MenuController;
 use App\Http\Controllers\Admin\ProgramController;
+use App\Http\Controllers\Admin\RencanakegiatanController;
 use App\Http\Controllers\Admin\RoController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\SubkomponenController;
@@ -46,6 +48,7 @@ Route::domain('')->group(function () { // development
     Route::get('/komponen/list/{id}',  [KomponenController::class, 'list'])->name('komponen.list');   
     Route::get('/sub-komponen/list/{id}',  [SubkomponenController::class, 'list'])->name('subkomponen.list');   
     Route::get('/kode-akun/list/{id}',  [KodeakunController::class, 'list'])->name('kodeakun.list');   
+    Route::get('/detail-uraian/list/{id}',  [DetailuraianController::class, 'list'])->name('detailuraian.list');   
 
     // ADMIN_ROUTES
     Route::group(['prefix' => 'admin',   'middleware' => ['auth']], function () {
@@ -54,8 +57,27 @@ Route::domain('')->group(function () { // development
 
 
         # APPS 
+        Route::group(['prefix' => '/rencana-kegiatan'], function () {
+            Route::get('/', [RencanakegiatanController::class, 'index'])->name('rencanakegiatan.index');
+            Route::get('/data', [RencanakegiatanController::class, 'data'])->name('rencanakegiatan.data');
+            Route::get('/create', [RencanakegiatanController::class, 'create'])->name('rencanakegiatan.create');
+            Route::post('/store', [RencanakegiatanController::class, 'store'])->name('rencanakegiatan.store');
+            Route::get('/{id}/edit', [RencanakegiatanController::class, 'edit'])->name('rencanakegiatan.edit');
+            Route::put('/{id}', [RencanakegiatanController::class, 'update'])->name('rencanakegiatan.update');
+            Route::delete('/{id}', [RencanakegiatanController::class, 'destroy'])->name('rencanakegiatan.delete');
+        });
 
         # MENU MASTER DATA 
+        Route::group(['prefix' => '/bagsubag'], function () {
+            Route::get('/', [BagsubagController::class, 'index'])->name('bagsubag.index');
+            Route::get('/data', [BagsubagController::class, 'data'])->name('bagsubag.data');
+            Route::get('/create', [BagsubagController::class, 'create'])->name('bagsubag.create');
+            Route::post('/store', [BagsubagController::class, 'store'])->name('bagsubag.store');
+            Route::get('/{id}/edit', [BagsubagController::class, 'edit'])->name('bagsubag.edit');
+            Route::put('/{id}', [BagsubagController::class, 'update'])->name('bagsubag.update');
+            Route::delete('/{id}', [BagsubagController::class, 'destroy'])->name('bagsubag.delete');
+
+        });
         Route::group(['prefix' => '/program'], function () {
             Route::get('/', [ProgramController::class, 'index'])->name('program.index');
             Route::get('/data', [ProgramController::class, 'data'])->name('program.data');

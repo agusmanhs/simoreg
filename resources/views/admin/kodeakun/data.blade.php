@@ -22,7 +22,7 @@
         </td>
 
         <td class="text-end">
-            {!! Helper::btnAction($v->id, 'sub-komponen') !!}
+            {!! Helper::btnAction($v->id, 'kode-akun') !!}
             {{-- <a href="#" class="btn btn-sm btn-light btn-flex btn-center btn-active-light-primary"
                 data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions
                 <i class="ki-duotone ki-down fs-5 ms-1"></i></a>

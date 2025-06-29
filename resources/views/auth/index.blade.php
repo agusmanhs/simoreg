@@ -3,12 +3,12 @@
 <!--begin::Head-->
 
 <head>
-    <title>Sign In - BPFK Makassar</title>
+    <title>Sign In - SIMOREG POLDA SulSel</title>
     <meta charset="utf-8" />
     <meta name="description" content="bpfk." />
     <meta name="keywords" content="bpfk" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta property="og:title" content="BPFK Makassar" />
+    <meta property="og:title" content="SIMOREG - POLDA Sulsel" />
     <link rel="shortcut icon" href="assets/media/logos/favicon.ico" />
 
     <!--begin::Fonts(mandatory for all pages)-->
@@ -52,7 +52,7 @@
         <!--begin::Page bg image-->
         <style>
             body {
-                background-image: url('{{ asset('/') }}themes/dist/assets/media/auth/bg4.jpg');
+                background-image: url('{{ asset('/') }}themes/dist/assets/media/auth/bg4-2.jpeg');
             }
 
             [data-bs-theme="dark"] body {
@@ -67,12 +67,12 @@
                 <!--begin::Aside-->
                 <div class="d-flex flex-center flex-lg-start flex-column">
                     <!--begin::Logo-->
-                    <a href="index.html" class="mb-7">
+                    {{-- <a href="index.html" class="mb-7">
                         <img alt="Logo" src="{{ asset('/') }}themes/dist/assets/media/logos/custom-3.svg" />
-                    </a>
+                    </a> --}}
                     <!--end::Logo-->
                     <!--begin::Title-->
-                    <h2 class="text-white fw-normal m-0">Branding tools designed for your business</h2>
+                    {{-- <h2 class="text-white fw-normal m-0">Branding tools designed for your business</h2> --}}
                     <!--end::Title-->
                 </div>
                 <!--begin::Aside-->

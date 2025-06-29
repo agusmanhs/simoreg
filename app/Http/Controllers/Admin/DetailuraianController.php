@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Services\Repositories\Contracts\DetailuraianContract;
+use App\Models\Detailuraian;
 use Illuminate\Http\Request;
 
 class DetailuraianController extends Controller
@@ -99,7 +100,7 @@ class DetailuraianController extends Controller
 
     public function list($id)
     {
-        $data = Subkomponen::where('komponen_id', $id)->get();
+        $data = Detailuraian::where('kodeakun_id', $id)->get();
         return $data;
     }  
 }
