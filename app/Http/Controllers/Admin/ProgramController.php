@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Services\Repositories\Contracts\ProgramContract;
+use App\Models\Program;
 use Illuminate\Http\Request;
 
 class ProgramController extends Controller

@@ -3,24 +3,24 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Services\Repositories\Contracts\RencanakegiatanContract;
+use App\Models\RencanaKegiatan;
 use Illuminate\Http\Request;
 
-class RencanakegiatanController extends Controller
+class DetailkegiatanController extends Controller
 {
     protected $title, $repo, $response;
 
-    public function __construct(RencanakegiatanContract $repo)
+    public function __construct()
     {
-        $this->title = 'rencanakegiatan';
-        $this->repo = $repo;
+        $this->title = 'detail-kegiatan';
     }
 
     public function index()
     {
         try {
             $title = $this->title;
-            return view('admin.' . $title . '.index', compact('title'));
+            $data = RencanaKegiatan::get();
+            return view('admin.detailkegiatan.index', compact('title','data'));
         } catch (\Exception $e) {
             return view('errors.message', ['message' => $e->getMessage()]);
         }
@@ -30,7 +30,6 @@ class RencanakegiatanController extends Controller
     {
         try {
             $title = $this->title;
-            
             $data = $this->repo->paginated($request->all());
             $perPage = $request->per_page == '' ? 5 : $request->per_page;
             $view = view('admin.' . $title . '.data', compact('data', 'title'))->with('i', ($request->input('page', 1) -
@@ -98,9 +97,4 @@ class RencanakegiatanController extends Controller
         }
     }
 
-    public function list($id)
-    {
-        $data = Subkomponen::where('komponen_id', $id)->get();
-        return $data;
-    }  
 }

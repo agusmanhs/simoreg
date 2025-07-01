@@ -14,6 +14,7 @@ class Detailuraian extends Model
         'kodeakun_id',
         'kode',
         'nama',
+        'pagu',
     ];
 
     public function kodeakun(): BelongsTo

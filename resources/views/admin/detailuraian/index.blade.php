@@ -47,11 +47,11 @@
                                 <th class="min-w-200px">
                                     Nama Kode Akun
                                 </th>
-                                <th class="min-w-75px">
-                                    Kode {{ $title }}
-                                </th>
                                 <th class="min-w-200px">
                                     Nama {{ $title }}
+                                </th>
+                                <th class="min-w-75px">
+                                    Pagu
                                 </th>
                                 <th class="text-end min-w-70px">
                                     Actions

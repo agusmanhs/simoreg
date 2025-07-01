@@ -8,7 +8,7 @@
     here show
 @endpush --}}
 
-@push($title)
+@push('rencana-kegiatan')
     active
 @endpush
 
@@ -55,6 +55,9 @@
                                 </th>
                                 <th class="min-w-200px">
                                     Pelaksana Kegiatan
+                                </th>
+                                <th class="min-w-200px">
+                                    Tanggal Realisasi
                                 </th>
                                 <th class="text-end min-w-70px">
                                     Actions

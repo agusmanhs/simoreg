@@ -115,22 +115,52 @@
 
                                     </select>
                                 </div>
-                                <div class="col-md-2 fv-row">
-                                    <label class="fs-6 fw-semibold mb-2">Kode {{ Str::ucfirst($title) }}</label>
-                                    <input type="text" class="form-control" placeholder="Kode {{ Str::ucfirst($title) }}"
-                                        name="kode" id="kode" maxlength="20" value="{{ $data->kode ?? '' }}" />
+                                <div class="col-md-12 fv-row">
+                                    <label class="fs-6 fw-semibold mb-2">Nama Detail Uraian</label>
+                                    <select class="form-select" data-control="select2" data-hide-search="true"
+                                        data-placeholder="Select a Kode Akun" name="detailuraian_id" id="detailuraian_id">
+                                        <option value="">Select Detail Uraian...</option>
+
+                                    </select>
                                 </div>
-                                <div class="col-md-8 fv-row">
-                                    <label class="fs-6 fw-semibold mb-2">Nama {{ Str::ucfirst($title) }}</label>
-                                    <input type="text" class="form-control"
-                                        placeholder="Nama {{ Str::ucfirst($title) }}" name="nama" id="nama"
-                                        value="{{ $data->nama ?? '' }}" />
+
+                                <div class="col-md-4 fv-row">
+                                    <label class="fs-6 fw-semibold mb-2">Pagu</label>
+                                    <input type="text" class="form-control" placeholder="Pagu" name="pagu"
+                                        id="pagu" maxlength="20" value="{{ $data->pagu ?? '' }}" />
                                 </div>
-                                <div class="col-md-2 fv-row">
-                                    <label class="fs-6 fw-semibold mb-2">Pagu {{ Str::ucfirst($title) }}</label>
-                                    <input type="text" class="form-control"
-                                        placeholder="Kode {{ Str::ucfirst($title) }}" name="pagu" id="pagu"
-                                        maxlength="20" value="{{ $data->pagu ?? '' }}" />
+                                <div class="col-md-4 fv-row">
+                                    <label class="fs-6 fw-semibold mb-2">Bulan Pelaksanaan</label>
+                                    <select class="form-select" data-control="select2" data-hide-search="true"
+                                        data-placeholder="Select Bulan" name="bulan" id="bulan">
+                                        <option value="{{ $data->bulan ?? '' }}">{{ $data->bulan ?? 'Select Bulan...' }}
+                                        </option>
+                                        <option value="1">Januari</option>
+                                        <option value="2">Februari</option>
+                                        <option value="3">Maret</option>
+                                        <option value="4">April</option>
+                                        <option value="5">Mei</option>
+                                        <option value="6">Juni</option>
+                                        <option value="7">Juli</option>
+                                        <option value="8">Agustus</option>
+                                        <option value="9">September</option>
+                                        <option value="10">Oktober</option>
+                                        <option value="11">November</option>
+                                        <option value="12">Desember</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-4 fv-row">
+                                    <label class="fs-6 fw-semibold mb-2">Pelaksana Kegiatan</label>
+                                    <select class="form-select" data-control="select2" data-hide-search="true"
+                                        data-placeholder="Select a Program" name="bagsubag_id" id="bagsubag_id">
+                                        <option value="">Select Program...</option>
+                                        @foreach (Helper::getData('bagsubags')->all() as $v)
+                                            <option
+                                                {{ isset($data->bagsubag_id) && $data->bagsubag_id == $v->id ? 'selected' : '' }}
+                                                value="{{ $v->id }}">{{ $v->kode }}
+                                            </option>
+                                        @endforeach
+                                    </select>
                                 </div>
                             </div>
                             <!--end::Input group-->
@@ -337,6 +367,27 @@
             }
         });
 
+        $('#kodeakun_id').change(function() {
+            var id_ro = $(this).val();
+            console.log(id_ro);
+            if (id_ro) {
+                $.ajax({
+                    type: "GET",
+                    url: "{{ url('detail-uraian/list') }}/" + id_ro,
+                    success: function(result) {
+                        $('#detailuraian_id').html('<option value="">-- Unit Kerja --</option>');
+                        $.each(result, function(key, value) {
+                            $("#detailuraian_id").append('<option value="' + value.id + '">' +
+                                value
+                                .nama + '</option>');
+                        });
+                    }
+                });
+            } else {
+                $("#kodeakun_id").empty();
+            }
+        });
+
 
         // // proses save data
         // const submitButton = document.getElementById('kt_modal_new_target_save');
@@ -388,66 +439,7 @@
     </script>
 
     @if (isset($data->id))
-        <script type="text/javascript">
-            $(document).ready(function() {
-
-                // proses update data
-                const submitButtonUpdate = document.getElementById('kt_modal_new_target_update');
-                submitButtonUpdate.addEventListener('click', function(e) {
-                    // Prevent default button action
-                    e.preventDefault();
-
-                    // Validate form before submit
-                    if (validator) {
-                        validator.validate().then(function(status) {
-                            if (status == 'Valid') {
-                                // Show loading indication
-                                submitButtonUpdate.setAttribute('data-kt-indicator', 'on');
-                                submitButtonUpdate.disabled = true;
-                                let formData = new FormData(kt_modal_new_target_form);
-                                let id = $('#formId').val();
-                                $.ajax({
-                                    headers: {
-                                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr(
-                                            'content')
-                                    },
-                                    data: formData,
-                                    url: '{{ url('admin/detail-uraian') }}/' + id,
-                                    type: "POST",
-                                    dataType: 'json',
-                                    processData: false,
-                                    contentType: false,
-                                    success: function(data) {
-                                        console.log('data');
-                                        if (data == 'konfirmasi password salah') {
-                                            toastr.error("Konfirmasi password salah!");
-                                            submitButtonUpdate.removeAttribute(
-                                                'data-kt-indicator');
-                                            submitButtonUpdate.disabled = false;
-                                        } else {
-                                            toastr.success("Successful update data!");
-                                            setTimeout(() => {
-                                                window.location.replace(
-                                                    "{{ route($title . '.index') }}"
-                                                );
-                                            }, 750);
-                                        }
-
-                                    },
-                                    error: function(data) {
-                                        submitButtonUpdate.removeAttribute(
-                                            'data-kt-indicator');
-                                        submitButtonUpdate.disabled = false;
-                                        toastr.error("Failed to update data!");
-                                    }
-                                });
-                            }
-                        });
-                    }
-                });
-
-            });
-        </script>
+        @include('admin._card._updateAjax')
     @else
         @include('admin._card._createAjax')
     @endif

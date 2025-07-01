@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\BagsubagController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\DetailkegiatanController;
 use App\Http\Controllers\Admin\DetailuraianController;
 use App\Http\Controllers\Admin\KegiatanController;
 use App\Http\Controllers\Admin\KodeakunController;
@@ -13,6 +14,7 @@ use App\Http\Controllers\Admin\RencanakegiatanController;
 use App\Http\Controllers\Admin\RoController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\SubkomponenController;
+use App\Http\Controllers\Admin\TestController;
 use App\Http\Controllers\Admin\UserMenuController;
 use App\Http\Controllers\Admin\UsersController;
 use Illuminate\Support\Facades\Route;
@@ -66,6 +68,28 @@ Route::domain('')->group(function () { // development
             Route::put('/{id}', [RencanakegiatanController::class, 'update'])->name('rencanakegiatan.update');
             Route::delete('/{id}', [RencanakegiatanController::class, 'destroy'])->name('rencanakegiatan.delete');
         });
+
+        Route::group(['prefix' => '/detail-kegiatan'], function () {
+            Route::get('/', [DetailkegiatanController::class, 'index'])->name('detailkegiatan.index');
+            Route::get('/data', [DetailkegiatanController::class, 'data'])->name('detailkegiatan.data');
+            Route::get('/create', [DetailkegiatanController::class, 'create'])->name('detailkegiatan.create');
+            Route::post('/store', [DetailkegiatanController::class, 'store'])->name('detailkegiatan.store');
+            Route::get('/{id}/edit', [DetailkegiatanController::class, 'edit'])->name('detailkegiatan.edit');
+            Route::put('/{id}', [DetailkegiatanController::class, 'update'])->name('detailkegiatan.update');
+            Route::delete('/{id}', [DetailkegiatanController::class, 'destroy'])->name('detailkegiatan.delete');
+        });
+
+        Route::group(['prefix' => '/testing'], function () {
+            Route::get('/', [TestController::class, 'index'])->name('testing.index');
+            Route::get('/data', [TestController::class, 'data'])->name('testing.data');
+            Route::get('/create', [TestController::class, 'create'])->name('testing.create');
+            Route::post('/store', [TestController::class, 'store'])->name('testing.store');
+            Route::get('/{id}/edit', [TestController::class, 'edit'])->name('testing.edit');
+            Route::put('/{id}', [TestController::class, 'update'])->name('testing.update');
+            Route::delete('/{id}', [TestController::class, 'destroy'])->name('testing.delete');
+        });
+
+
 
         # MENU MASTER DATA 
         Route::group(['prefix' => '/bagsubag'], function () {

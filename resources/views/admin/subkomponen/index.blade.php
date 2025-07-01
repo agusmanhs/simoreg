@@ -8,7 +8,7 @@
     here show
 @endpush --}}
 
-@push($title)
+@push('sub-komponen')
     active
 @endpush
 

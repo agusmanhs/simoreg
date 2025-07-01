@@ -125,11 +125,6 @@
                                 </div>
 
                                 <div class="col-md-4 fv-row">
-                                    <label class="fs-6 fw-semibold mb-2">Pagu</label>
-                                    <input type="text" class="form-control" placeholder="Pagu" name="pagu"
-                                        id="pagu" maxlength="20" value="{{ $data->pagu ?? '' }}" />
-                                </div>
-                                <div class="col-md-4 fv-row">
                                     <label class="fs-6 fw-semibold mb-2">Bulan Pelaksanaan</label>
                                     <select class="form-select" data-control="select2" data-hide-search="true"
                                         data-placeholder="Select Bulan" name="bulan" id="bulan">
@@ -149,7 +144,7 @@
                                         <option value="12">Desember</option>
                                     </select>
                                 </div>
-                                <div class="col-md-4 fv-row">
+                                <div class="col-md-8 fv-row">
                                     <label class="fs-6 fw-semibold mb-2">Pelaksana Kegiatan</label>
                                     <select class="form-select" data-control="select2" data-hide-search="true"
                                         data-placeholder="Select a Program" name="bagsubag_id" id="bagsubag_id">

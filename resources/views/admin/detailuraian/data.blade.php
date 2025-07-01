@@ -12,12 +12,12 @@
         </td>
         <td class="pe-0">
             <span class="fw-semibold">
-                {{ $v->kode }}
+                {{ $v->nama }}
             </span>
         </td>
         <td>
             <span class="fw-semibold">
-                {{ $v->nama }}
+                Rp. {{ number_format($v->pagu) }}
             </span>
         </td>
 
