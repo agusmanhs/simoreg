@@ -16,7 +16,9 @@ return new class extends Migration
             $table->unsignedBigInteger('kodeakun_id');
             $table->foreign('kodeakun_id')->references('id')->on('kodeakuns');
             $table->string('kode', 20);
-            $table->string('nama', 150);            $table->timestamps();
+            $table->string('nama', 150);            
+            $table->bigInteger('pagu');
+            $table->timestamps();
         });
     }
 
