@@ -75,8 +75,8 @@
                                 </i>Export</button>
                             <!--end::Export-->
                             <!--begin::Add customer-->
-                            <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                                data-bs-target="#kt_modal_add_customer">Add Customer</button>
+                            {{-- <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                data-bs-target="#kt_modal_add_customer">Add Customer</button> --}}
                             <!--end::Add customer-->
                         </div>
                         <!--end::Toolbar-->
@@ -651,25 +651,27 @@
                         <!--begin::Modal body-->
                         <div class="modal-body scroll-y mx-5 mx-xl-15 my-7">
                             <!--begin::Form-->
-                            <form id="kt_customers_export_form" class="form" action="#">
+                            <form id="kt_customers_export_form" class="form"
+                                action="{{ route('detailkegiatan.export') }}" target="_blank">
+                                @csrf
                                 <!--begin::Input group-->
                                 <div class="fv-row mb-10">
                                     <!--begin::Label-->
-                                    <label class="fs-5 fw-semibold form-label mb-5">Select Export Format:</label>
+                                    <label class="fs-5 fw-semibold form-label mb-5">Select Bagian/SubBagian:</label>
                                     <!--end::Label-->
                                     <!--begin::Input-->
                                     <select data-control="select2" data-placeholder="Select a format"
                                         data-hide-search="true" name="format" class="form-select form-select-solid">
-                                        <option value="excell">Excel</option>
-                                        <option value="pdf">PDF</option>
-                                        <option value="cvs">CVS</option>
-                                        <option value="zip">ZIP</option>
+                                        <option value="all">All</option>
+                                        @foreach (Helper::getData('bagsubags')->all() as $v)
+                                            <option value="{{ $v->id }}">{{ $v->kode }}</option>
+                                        @endforeach
                                     </select>
                                     <!--end::Input-->
                                 </div>
                                 <!--end::Input group-->
                                 <!--begin::Input group-->
-                                <div class="fv-row mb-10">
+                                {{-- <div class="fv-row mb-10">
                                     <!--begin::Label-->
                                     <label class="fs-5 fw-semibold form-label mb-5">Select Date Range:</label>
                                     <!--end::Label-->
@@ -677,10 +679,10 @@
                                     <input class="form-control form-control-solid" placeholder="Pick a date"
                                         name="date" />
                                     <!--end::Input-->
-                                </div>
+                                </div> --}}
                                 <!--end::Input group-->
                                 <!--begin::Row-->
-                                <div class="row fv-row mb-15">
+                                {{-- <div class="row fv-row mb-15">
                                     <!--begin::Label-->
                                     <label class="fs-5 fw-semibold form-label mb-5">Payment Type:</label>
                                     <!--end::Label-->
@@ -717,13 +719,13 @@
                                         <!--end::Radio button-->
                                     </div>
                                     <!--end::Input group-->
-                                </div>
+                                </div> --}}
                                 <!--end::Row-->
                                 <!--begin::Actions-->
                                 <div class="text-center">
                                     <button type="reset" id="kt_customers_export_cancel"
                                         class="btn btn-light me-3">Discard</button>
-                                    <button type="submit" id="kt_customers_export_submit" class="btn btn-primary">
+                                    <button type="submit" id="kt_customers_export_submitX" class="btn btn-primary">
                                         <span class="indicator-label">Submit</span>
                                         <span class="indicator-progress">Please wait...
                                             <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>

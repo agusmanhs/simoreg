@@ -38,18 +38,18 @@ class TestController extends Controller
             $detailuraian = Detailuraian::get();
             $rencana = DB::select('select 
 	a.*,
-	SUM(CASE WHEN b.bulan = 1 THEN 1 ELSE 0 END) AS januari,
-    SUM(CASE WHEN b.bulan = 2 THEN 1 ELSE 0 END) AS februari,
-    SUM(CASE WHEN b.bulan = 3 THEN 1 ELSE 0 END) AS maret,
-    SUM(CASE WHEN b.bulan = 4 THEN 1 ELSE 0 END) AS april,
-    SUM(CASE WHEN b.bulan = 5 THEN 1 ELSE 0 END) AS mei,
-    SUM(CASE WHEN b.bulan = 6 THEN 1 ELSE 0 END) AS juni,
-    SUM(CASE WHEN b.bulan = 7 THEN 1 ELSE 0 END) AS juli,
-    SUM(CASE WHEN b.bulan = 8 THEN 1 ELSE 0 END) AS agustus,
-    SUM(CASE WHEN b.bulan = 9 THEN 1 ELSE 0 END) AS september,
-    SUM(CASE WHEN b.bulan = 10 THEN 1 ELSE 0 END) AS oktober,
-    SUM(CASE WHEN b.bulan = 11 THEN 1 ELSE 0 END) AS november,
-    SUM(CASE WHEN b.bulan = 12 THEN 1 ELSE 0 END) AS desember	
+	CASE WHEN MAX(CASE WHEN b.bulan = 1 THEN 1 ELSE 0 END) = 1 THEN "X" ELSE "" END AS januari,
+        CASE WHEN MAX(CASE WHEN b.bulan = 2 THEN 1 ELSE 0 END) = 1 THEN "X" ELSE "" END AS februari,
+        CASE WHEN MAX(CASE WHEN b.bulan = 3 THEN 1 ELSE 0 END) = 1 THEN "X" ELSE "" END AS maret,
+        CASE WHEN MAX(CASE WHEN b.bulan = 4 THEN 1 ELSE 0 END) = 1 THEN "X" ELSE "" END AS april,
+        CASE WHEN MAX(CASE WHEN b.bulan = 5 THEN 1 ELSE 0 END) = 1 THEN "X" ELSE "" END AS mei,
+        CASE WHEN MAX(CASE WHEN b.bulan = 6 THEN 1 ELSE 0 END) = 1 THEN "X" ELSE "" END AS juni,
+        CASE WHEN MAX(CASE WHEN b.bulan = 7 THEN 1 ELSE 0 END) = 1 THEN "X" ELSE "" END AS juli,
+        CASE WHEN MAX(CASE WHEN b.bulan = 8 THEN 1 ELSE 0 END) = 1 THEN "X" ELSE "" END AS agustus,
+        CASE WHEN MAX(CASE WHEN b.bulan = 9 THEN 1 ELSE 0 END) = 1 THEN "X" ELSE "" END AS september,
+        CASE WHEN MAX(CASE WHEN b.bulan = 10 THEN 1 ELSE 0 END) = 1 THEN "X" ELSE "" END AS oktober,
+        CASE WHEN MAX(CASE WHEN b.bulan = 11 THEN 1 ELSE 0 END) = 1 THEN "X" ELSE "" END AS november,
+        CASE WHEN MAX(CASE WHEN b.bulan = 12 THEN 1 ELSE 0 END) = 1 THEN "X" ELSE "" END AS desember	
 from detailuraians as a left join `rencana_kegiatans` as b on b.detailuraian_id = a.id
 GROUP BY a.nama,a.id;');
             return view('admin.' . $title . '.index', compact('title','program','kegiatan','kro','ro','komponen','subkomponen','kodeakun','detailuraian','rencana'));

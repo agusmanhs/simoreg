@@ -77,6 +77,8 @@ Route::domain('')->group(function () { // development
             Route::get('/{id}/edit', [DetailkegiatanController::class, 'edit'])->name('detailkegiatan.edit');
             Route::put('/{id}', [DetailkegiatanController::class, 'update'])->name('detailkegiatan.update');
             Route::delete('/{id}', [DetailkegiatanController::class, 'destroy'])->name('detailkegiatan.delete');
+            
+            Route::get('/export', [DetailkegiatanController::class, 'export'])->name('detailkegiatan.export');
         });
 
         Route::group(['prefix' => '/testing'], function () {

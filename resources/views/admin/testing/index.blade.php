@@ -26,18 +26,18 @@
             <td>{{ $a->kode }}</td>
             <td>{{ $a->nama }}</td>
             <td></td>
-            <td>--</td>
-            <td>--</td>
-            <td>--</td>
-            <td>--</td>
-            <td>--</td>
-            <td>--</td>
-            <td>--</td>
-            <td>--</td>
-            <td>--</td>
-            <td>--</td>
-            <td>--</td>
-            <td>--</td>
+            <td>------</td>
+            <td>------</td>
+            <td>------</td>
+            <td>------</td>
+            <td>------</td>
+            <td>------</td>
+            <td>------</td>
+            <td>------</td>
+            <td>------</td>
+            <td>------</td>
+            <td>------</td>
+            <td>------</td>
             <td>Ket</td>
         </tr>
         @foreach ($kegiatan as $b)
@@ -47,18 +47,18 @@
                     <td>{{ $b->kode }}</td>
                     <td style="padding-left: 20px">{{ $b->nama }}</td>
                     <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    <td>------</td>
+                    <td>------</td>
+                    <td>------</td>
+                    <td>------</td>
+                    <td>------</td>
+                    <td>------</td>
+                    <td>------</td>
+                    <td>------</td>
+                    <td>------</td>
+                    <td>------</td>
+                    <td>------</td>
+                    <td>------</td>
                     <td>Ket</td>
                 </tr>
                 @foreach ($kro as $c)
@@ -68,18 +68,18 @@
                             <td>{{ $c->kode }}</td>
                             <td style="padding-left: 40px">{{ $c->nama }}</td>
                             <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
+                            <td>------</td>
+                            <td>------</td>
+                            <td>------</td>
+                            <td>------</td>
+                            <td>------</td>
+                            <td>------</td>
+                            <td>------</td>
+                            <td>------</td>
+                            <td>------</td>
+                            <td>------</td>
+                            <td>------</td>
+                            <td>------</td>
                             <td>Ket</td>
                         </tr>
                         @foreach ($ro as $d)
@@ -89,18 +89,18 @@
                                     <td>{{ $d->kode }}</td>
                                     <td style="padding-left: 60px">{{ $d->nama }}</td>
                                     <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
+                                    <td>------</td>
+                                    <td>------</td>
+                                    <td>------</td>
+                                    <td>------</td>
+                                    <td>------</td>
+                                    <td>------</td>
+                                    <td>------</td>
+                                    <td>------</td>
+                                    <td>------</td>
+                                    <td>------</td>
+                                    <td>------</td>
+                                    <td>------</td>
                                     <td>Ket</td>
                                 </tr>
                                 @foreach ($komponen as $e)
@@ -110,18 +110,18 @@
                                             <td>{{ $e->kode }}</td>
                                             <td style="padding-left: 80px">{{ $e->nama }}</td>
                                             <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
+                                            <td>------</td>
+                                            <td>------</td>
+                                            <td>------</td>
+                                            <td>------</td>
+                                            <td>------</td>
+                                            <td>------</td>
+                                            <td>------</td>
+                                            <td>------</td>
+                                            <td>------</td>
+                                            <td>------</td>
+                                            <td>------</td>
+                                            <td>------</td>
                                             <td>Ket</td>
                                         </tr>
                                         @foreach ($subkomponen as $f)
@@ -131,18 +131,18 @@
                                                     <td>{{ $f->kode }}</td>
                                                     <td style="padding-left: 100px">{{ $f->nama }}</td>
                                                     <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
+                                                    <td>------</td>
+                                                    <td>------</td>
+                                                    <td>------</td>
+                                                    <td>------</td>
+                                                    <td>------</td>
+                                                    <td>------</td>
+                                                    <td>------</td>
+                                                    <td>------</td>
+                                                    <td>------</td>
+                                                    <td>------</td>
+                                                    <td>------</td>
+                                                    <td>------</td>
                                                     <td>Ket</td>
                                                 </tr>
                                                 @foreach ($kodeakun as $g)
@@ -152,40 +152,53 @@
                                                             <td>{{ $g->kode }}</td>
                                                             <td style="padding-left: 120px">{{ $g->nama }}</td>
                                                             <td></td>
-                                                            <td></td>
-                                                            <td></td>
-                                                            <td></td>
-                                                            <td></td>
-                                                            <td></td>
-                                                            <td></td>
-                                                            <td></td>
-                                                            <td></td>
-                                                            <td></td>
-                                                            <td></td>
-                                                            <td></td>
-                                                            <td></td>
+                                                            <td>------</td>
+                                                            <td>------</td>
+                                                            <td>------</td>
+                                                            <td>------</td>
+                                                            <td>------</td>
+                                                            <td>------</td>
+                                                            <td>------</td>
+                                                            <td>------</td>
+                                                            <td>------</td>
+                                                            <td>------</td>
+                                                            <td>------</td>
+                                                            <td>------</td>
                                                             <td>Ket</td>
                                                         </tr>
                                                         @foreach ($rencana as $h)
                                                             @if ($h->kodeakun_id == $g->id)
                                                                 <tr>
                                                                     <td>{{ ++$i }}</td>
-                                                                    <td>{{ $h->kode }}</td>
+                                                                    <td style="text-align: right;">{{ $h->kode }}
+                                                                    </td>
                                                                     <td style="padding-left: 140px">{{ $h->nama }}
                                                                     </td>
                                                                     <td>{{ $h->pagu }}</td>
-                                                                    <td>{{ $h->januari }}</td>
-                                                                    <td>{{ $h->februari }}</td>
-                                                                    <td>{{ $h->maret }}</td>
-                                                                    <td>{{ $h->april }}</td>
-                                                                    <td>{{ $h->mei }}</td>
-                                                                    <td>{{ $h->juni }}</td>
-                                                                    <td>{{ $h->juli }}</td>
-                                                                    <td>{{ $h->agustus }}</td>
-                                                                    <td>{{ $h->september }}</td>
-                                                                    <td>{{ $h->oktober }}</td>
-                                                                    <td>{{ $h->november }}</td>
-                                                                    <td>{{ $h->desember }}</td>
+                                                                    <td style="text-align: center;">{{ $h->januari }}
+                                                                    </td>
+                                                                    <td style="text-align: center;">{{ $h->februari }}
+                                                                    </td>
+                                                                    <td style="text-align: center;">{{ $h->maret }}
+                                                                    </td>
+                                                                    <td style="text-align: center;">{{ $h->april }}
+                                                                    </td>
+                                                                    <td style="text-align: center;">{{ $h->mei }}
+                                                                    </td>
+                                                                    <td style="text-align: center;">{{ $h->juni }}
+                                                                    </td>
+                                                                    <td style="text-align: center;">{{ $h->juli }}
+                                                                    </td>
+                                                                    <td style="text-align: center;">{{ $h->agustus }}
+                                                                    </td>
+                                                                    <td style="text-align: center;">{{ $h->september }}
+                                                                    </td>
+                                                                    <td style="text-align: center;">{{ $h->oktober }}
+                                                                    </td>
+                                                                    <td style="text-align: center;">{{ $h->november }}
+                                                                    </td>
+                                                                    <td style="text-align: center;">{{ $h->desember }}
+                                                                    </td>
                                                                     <td>Ket</td>
                                                                 </tr>
                                                             @endif
