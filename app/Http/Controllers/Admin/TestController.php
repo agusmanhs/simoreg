@@ -28,16 +28,16 @@ class TestController extends Controller
     {
         try {
             $title = $this->title;
-            $program = Program::get();
-            $kegiatan = Kegiatan::get();
-            $kro = Kro::get();
-            $ro = Ro::get();
-            $komponen = Komponen::get();
-            $subkomponen = Subkomponen::get();
-            $kodeakun = Kodeakun::get();
-            $detailuraian = Detailuraian::get();
-            $rencana = DB::select('select 
-	a.*,
+            // $program = Program::get();
+            // $kegiatan = Kegiatan::get();
+            // $kro = Kro::get();
+            // $ro = Ro::get();
+            // $komponen = Komponen::get();
+            // $subkomponen = Subkomponen::get();
+            // $kodeakun = Kodeakun::get();
+            // $detailuraian = Detailuraian::get();
+            $data = DB::select('select 
+	a.*,c.kode as bag,
 	CASE WHEN MAX(CASE WHEN b.bulan = 1 THEN 1 ELSE 0 END) = 1 THEN "X" ELSE "" END AS januari,
         CASE WHEN MAX(CASE WHEN b.bulan = 2 THEN 1 ELSE 0 END) = 1 THEN "X" ELSE "" END AS februari,
         CASE WHEN MAX(CASE WHEN b.bulan = 3 THEN 1 ELSE 0 END) = 1 THEN "X" ELSE "" END AS maret,
@@ -52,8 +52,10 @@ class TestController extends Controller
         CASE WHEN MAX(CASE WHEN b.bulan = 12 THEN 1 ELSE 0 END) = 1 THEN "X" ELSE "" END AS desember,
         COUNT(b.id) AS jumkeg	
 from detailuraians as a left join `rencana_kegiatans` as b on b.detailuraian_id = a.id
+left join `bagsubags` as c on c.id = a.bagsubag_id
 GROUP BY a.nama,a.id;');
-            return view('admin.' . $title . '.index', compact('title','program','kegiatan','kro','ro','komponen','subkomponen','kodeakun','detailuraian','rencana'));
+// dd($data);
+            return view('admin.' . $title . '.index', compact('title','data'));
         } catch (\Exception $e) {
             return view('errors.message', ['message' => $e->getMessage()]);
         }

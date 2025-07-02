@@ -66,7 +66,7 @@
                                     <label class="fs-6 fw-semibold mb-2">Nama Kegiatan</label>
                                     <select class="form-select" data-control="select2" data-hide-search="true"
                                         data-placeholder="Select a Kegiatan" name="kegiatan_id" id="kegiatan_id">
-                                        <option value="">Select Kegiatan...</option>
+                                        <option value="{{ $data->kegiatan_id ?? '' }}">{{ $data->kegiatan->nama ?? '' }}</option>
                                         {{-- @foreach (Helper::getData('kegiatans')->all() as $v)
                                             <option
                                                 {{ isset($data->kegiatan_id) && $data->kegiatan_id == $v->id ? 'selected' : '' }}
@@ -79,7 +79,7 @@
                                     <label class="fs-6 fw-semibold mb-2">Nama KRO</label>
                                     <select class="form-select" data-control="select2" data-hide-search="true"
                                         data-placeholder="Select a KRO" name="kro_id" id="kro_id">
-                                        <option value="">Select KRO...</option>
+                                        <option value="{{ $data->kro_id ?? '' }}">{{ $data->kro->nama ?? '' }}</option>
 
                                     </select>
                                 </div>
@@ -87,7 +87,7 @@
                                     <label class="fs-6 fw-semibold mb-2">Nama RO</label>
                                     <select class="form-select" data-control="select2" data-hide-search="true"
                                         data-placeholder="Select a RO" name="ro_id" id="ro_id">
-                                        <option value="">Select RO...</option>
+                                        <option value="{{ $data->ro_id ?? '' }}">{{ $data->ro->nama ?? '' }}</option>
 
                                     </select>
                                 </div>
@@ -95,7 +95,7 @@
                                     <label class="fs-6 fw-semibold mb-2">Nama Komponen</label>
                                     <select class="form-select" data-control="select2" data-hide-search="true"
                                         data-placeholder="Select a Komponen" name="komponen_id" id="komponen_id">
-                                        <option value="">Select Komponen...</option>
+                                        <option value="{{ $data->komponen_id ?? ''}}">{{ $data->komponen->nama ?? ''}}</option>
 
                                     </select>
                                 </div>
@@ -103,7 +103,7 @@
                                     <label class="fs-6 fw-semibold mb-2">Nama Sub Komponen</label>
                                     <select class="form-select" data-control="select2" data-hide-search="true"
                                         data-placeholder="Select a Sub Komponen" name="subkomponen_id" id="subkomponen_id">
-                                        <option value="">Select Sub Komponen...</option>
+                                        <option value="{{ $data->subkomponen_id ?? '' }}">{{ $data->subkomponen->nama ?? '' }}</option>
 
                                     </select>
                                 </div>
@@ -111,7 +111,7 @@
                                     <label class="fs-6 fw-semibold mb-2">Nama Kode Akun</label>
                                     <select class="form-select" data-control="select2" data-hide-search="true"
                                         data-placeholder="Select a Kode Akun" name="kodeakun_id" id="kodeakun_id">
-                                        <option value="">Select Kode Akun...</option>
+                                        <option value="{{ $data->kodeakun_id ?? '' }}">{{ $data->kodeakun->nama ?? '' }}</option>
 
                                     </select>
                                 </div>
@@ -119,7 +119,7 @@
                                     <label class="fs-6 fw-semibold mb-2">Nama Detail Uraian</label>
                                     <select class="form-select" data-control="select2" data-hide-search="true"
                                         data-placeholder="Select a Kode Akun" name="detailuraian_id" id="detailuraian_id">
-                                        <option value="">Select Detail Uraian...</option>
+                                        <option value="{{ $data->detailuraian_id ?? '' }}">{{ $data->detailuraian->nama ?? '' }}</option>
 
                                     </select>
                                 </div>
@@ -129,7 +129,7 @@
                                     <select class="form-select" data-control="select2" data-hide-search="true"
                                         data-placeholder="Select Bulan" name="bulan" id="bulan">
                                         <option value="{{ $data->bulan ?? '' }}">
-                                            {{ Helper::getBulan($data->bulan) ?? 'Select Bulan...' }}
+                                            {{ isset($data->bulan) ? Helper::getBulan($data->bulan) : 'Select Bulan...' }}
                                         </option>
                                         <option value="1">Januari</option>
                                         <option value="2">Februari</option>
@@ -435,7 +435,67 @@
     </script>
 
     @if (isset($data->id))
-        @include('admin._card._updateAjax')
+    <script type="text/javascript">
+    $(document).ready(function() {
+
+        // proses update data
+        const submitButtonUpdate = document.getElementById('kt_modal_new_target_update');
+        submitButtonUpdate.addEventListener('click', function(e) {
+            // Prevent default button action
+            e.preventDefault();
+
+            // Validate form before submit
+            if (validator) {
+                validator.validate().then(function(status) {
+                    if (status == 'Valid') {
+                        // Show loading indication
+                        submitButtonUpdate.setAttribute('data-kt-indicator', 'on');
+                        submitButtonUpdate.disabled = true;
+                        let formData = new FormData(kt_modal_new_target_form);
+                        let id = $('#formId').val();
+                        $.ajax({
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr(
+                                    'content')
+                            },
+                            data: formData,
+                            url: '{{ url("admin/rencana-kegiatan") }}/' + id,
+                            type: "POST",
+                            dataType: 'json',
+                            processData: false,
+                            contentType: false,
+                            success: function(data) {
+                                console.log('data');
+                                if (data == 'konfirmasi password salah') {
+                                    toastr.error("Konfirmasi password salah!");
+                                    submitButtonUpdate.removeAttribute(
+                                        'data-kt-indicator');
+                                    submitButtonUpdate.disabled = false;
+                                } else {
+                                    toastr.success("Successful update data!");
+                                    setTimeout(() => {
+                                        window.location.replace(
+                                            "{{ route($title . '.index') }}"
+                                        );
+                                    }, 750);
+                                }
+
+                            },
+                            error: function(data) {
+                                submitButtonUpdate.removeAttribute(
+                                    'data-kt-indicator');
+                                submitButtonUpdate.disabled = false;
+                                toastr.error("Failed to update data!");
+                            }
+                        });
+                    }
+                });
+            }
+        });
+
+    });
+</script>
+
     @else
         @include('admin._card._createAjax')
     @endif

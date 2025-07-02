@@ -22,6 +22,9 @@ class RencanaKegiatan extends Model
         'pagu',
         'bulan',
         'bagsubag_id',
+        'tgl_realisasi',
+        'biaya',
+        'catatan'
     ];
 
     public function program(): BelongsTo

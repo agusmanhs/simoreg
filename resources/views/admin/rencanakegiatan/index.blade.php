@@ -32,7 +32,69 @@
             <div class="card card-flush">
 
                 <!--begin::Card header-->
-                @include('admin._card.action')
+                <div class="card-header align-items-center py-5 gap-2 gap-md-5">
+                    <!--begin::Card title-->
+                    <div class="card-title">
+                        <div class="mw-100px me-3">
+                            <select class="form-select form-select-solid me-3" data-control="select2" data-hide-search="true"
+                                data-placeholder="Per Page" id="perPage">
+                                <option>5</option>
+                                <option>10</option>
+                                <option>25</option>
+                                <option>50</option>
+                                <option>100</option>
+                            </select>
+                        </div>
+                        <div class="d-flex">
+                            <input id="input_search" type="text" class="form-control form-control-solid w-250px me-3"
+                                placeholder="Search">
+
+                            <button id="button_search" class="btn btn-secondary me-3">
+                                <span class="btn-label">
+                                    <i class="fa fa-search"></i>
+                                </span>
+                            </button>
+
+                            <button id="button_refresh" class="btn btn-secondary">
+                                <span class="btn-label">
+                                    <i class="fa fa-sync"></i>
+                                </span>
+                            </button>
+
+                        </div>
+                        <div class="mw-200px mx-5">
+                            <select class="form-select form-select form-select-solid me-3" data-control="select2"
+                                data-hide-search="true" data-placeholder="Select Bulan" name="bulan" id="bulan">
+                                <option value="">ALL</option>
+                                <option value="1">Januari</option>
+                                <option value="2">Februari</option>
+                                <option value="3">Maret</option>
+                                <option value="4">April</option>
+                                <option value="5">Mei</option>
+                                <option value="6">Juni</option>
+                                <option value="7">Juli</option>
+                                <option value="8">Agustus</option>
+                                <option value="9">September</option>
+                                <option value="10">Oktober</option>
+                                <option value="11">November</option>
+                                <option value="12">Desember</option>
+                            </select>
+                        </div>
+                    </div>
+                    <!--end::Card title-->
+
+                    <!--begin::Card toolbar-->
+                    <div class="card-toolbar flex-row-fluid justify-content-end gap-5">
+                        <a href="{{ route($title . '.create') }}" class="btn btn-success">
+                            <span class="btn-label">
+                                <i class="fa fa-plus"></i>
+                            </span>
+                            Add New
+                        </a>
+                    </div>
+                    <!--end::Card toolbar-->
+                </div>
+
                 <!--end::Card header-->
 
                 <!--begin::Card body-->
@@ -120,13 +182,169 @@
                 <!--end::Card body-->
             </div>
             <!--end::Products-->
+
         </div>
         <!--end::Content container-->
     </div>
     <!--end::Content-->
+
+								
+
 @endsection
 
 @push('jsScript')
+
+
+    <script>
+        "use strict";
+
+// Class definition
+var KTCustomersExport = function () {
+    var element;
+    var submitButton;
+    var cancelButton;
+	var closeButton;
+    closeButton = document.getElementById('#kt_customers_export_close');
+    cancelButton = document.getElementById('#kt_customers_export_cancel')
+    submitButton = document.getElementById('#kt_customers_export_submit')
+    // console.log(cancelButton)
+    var validator;
+    var form;
+    var modal;
+
+    // Init form inputs
+    var handleForm = function () {
+        // Init form validation rules. For more info check the FormValidation plugin's official documentation:https://formvalidation.io/
+		validator = FormValidation.formValidation(
+			form,
+			{
+				fields: {
+                    'date': {
+						validators: {
+							notEmpty: {
+								message: 'Date range is required'
+							}
+						}
+					},
+				},
+				plugins: {
+					trigger: new FormValidation.plugins.Trigger(),
+					bootstrap: new FormValidation.plugins.Bootstrap5({
+						rowSelector: '.fv-row',
+                        eleInvalidClass: '',
+                        eleValidClass: ''
+					})
+				}
+			}
+		);
+
+		// Action buttons
+// 		submitButton.addEventListener('click', function (e) {
+// 			e.preventDefault();      
+
+// modal.hide();
+// 		});
+
+        cancelButton.addEventListener('click', function (e) {
+            e.preventDefault();
+
+            Swal.fire({
+                text: "Are you sure you would like to cancel?",
+                icon: "warning",
+                showCancelButton: true,
+                buttonsStyling: false,
+                confirmButtonText: "Yes, cancel it!",
+                cancelButtonText: "No, return",
+                customClass: {
+                    confirmButton: "btn btn-primary",
+                    cancelButton: "btn btn-active-light"
+                }
+            }).then(function (result) {
+                if (result.value) {
+                    form.reset(); // Reset form	
+                    modal.hide(); // Hide modal		
+                } else if (result.dismiss === 'cancel') {
+                    Swal.fire({
+                        text: "Your form has not been cancelled!.",
+                        icon: "error",
+                        buttonsStyling: false,
+                        confirmButtonText: "Ok, got it!",
+                        customClass: {
+                            confirmButton: "btn btn-primary",
+                        }
+                    });
+                }
+            });
+        });
+
+		closeButton.addEventListener('click', function(e){
+			e.preventDefault();
+
+            Swal.fire({
+                text: "Are you sure you would like to cancel?",
+                icon: "warning",
+                showCancelButton: true,
+                buttonsStyling: false,
+                confirmButtonText: "Yes, cancel it!",
+                cancelButtonText: "No, return",
+                customClass: {
+                    confirmButton: "btn btn-primary",
+                    cancelButton: "btn btn-active-light"
+                }
+            }).then(function (result) {
+                if (result.value) {
+                    form.reset(); // Reset form	
+                    modal.hide(); // Hide modal			
+                } else if (result.dismiss === 'cancel') {
+                    Swal.fire({
+                        text: "Your form has not been cancelled!.",
+                        icon: "error",
+                        buttonsStyling: false,
+                        confirmButtonText: "Ok, got it!",
+                        customClass: {
+                            confirmButton: "btn btn-primary",
+                        }
+                    });
+                }
+            });
+		});
+    }
+
+    var initForm = function () {
+        const datepicker = form.querySelector("[name=date]");
+        
+        // Handle datepicker range -- For more info on flatpickr plugin, please visit: https://flatpickr.js.org/
+        $(datepicker).flatpickr({
+            altInput: true,
+            altFormat: "F j, Y",
+            dateFormat: "Y-m-d",
+            mode: "range"
+        });
+    }
+
+    return {
+        // Public functions
+        init: function () {
+            // Elements
+            element = document.querySelector('#update_realisasi');
+            modal = new bootstrap.Modal(element);
+
+            form = document.querySelector('#kt_customers_export_form');
+            submitButton = form.querySelector('#kt_customers_export_submit');
+            cancelButton = form.querySelector('#kt_customers_export_cancel');
+			closeButton = element.querySelector('#kt_customers_export_close');
+
+            handleForm();
+            initForm();
+        }
+    };
+}();
+
+// On document ready
+KTUtil.onDOMContentLoaded(function () {
+    KTCustomersExport.init();
+});
+    </script>
     <script type="text/javascript">
         $(document).ready(function() {
             loadpage(5, '');
@@ -140,13 +358,14 @@
             };
             $pagination.twbsPagination(defaultOpts);
 
-            function loaddata(page, per_page, search) {
+            function loaddata(page, per_page, search, bulan = '') {
                 $.ajax({
                     url: '{{ route($title . '.data') }}',
                     data: {
                         "page": page,
                         "per_page": per_page,
                         "search": search,
+                        "bulan": bulan,
                     },
                     type: "GET",
                     datatype: "json",
@@ -156,7 +375,7 @@
                 });
             }
 
-            function loadpage(per_page, search) {
+            function loadpage(per_page, search, bulan = '') {
                 $.ajax({
                     url: '{{ route($title . '.data') }}',
                     data: {
@@ -166,6 +385,7 @@
                     type: "GET",
                     datatype: "json",
                     success: function(response) {
+                        // console.log(response.data)
                         if ($pagination.data("twbs-pagination")) {
                             $pagination.twbsPagination('destroy');
                             $(".datatables").html('<tr><td colspan="4">Data not found</td></tr>');
@@ -192,7 +412,7 @@
                                 $('#contentPage').text('Showing ' + to + ' to ' + end +
                                     ' of ' +
                                     response.total_data + ' entries');
-                                loaddata(page, per_page, search);
+                                loaddata(page, per_page, search, bulan);
                             }
                         }));
                     }
@@ -208,6 +428,11 @@
             $("#button_refresh").on('click', function(event) {
                 $('#input_search').val('');
                 loadpage(5, '');
+            });
+
+            $("#bulan").on('change', function(event) {
+                let bulan = $('#bulan').val();
+                loadpage(5, '', bulan);
             });
 
 

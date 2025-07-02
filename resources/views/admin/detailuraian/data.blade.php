@@ -20,6 +20,13 @@
                 Rp. {{ number_format($v->pagu) }}
             </span>
         </td>
+        <td class="pe-0">
+            <span class="fw-semibold">
+                {{-- @if($v->basubag_id == null) --}}
+                    {{ $v->bagsubag->kode}}
+                {{-- @endif --}}
+            </span>
+        </td>
 
         <td class="text-end">
             {!! Helper::btnAction($v->id, 'detail-uraian') !!}

@@ -120,7 +120,7 @@
                                     <input type="text" class="form-control" placeholder="Kode {{ Str::ucfirst($title) }}"
                                         name="kode" id="kode" maxlength="20" value="{{ $data->kode ?? '' }}" />
                                 </div>
-                                <div class="col-md-8 fv-row">
+                                <div class="col-md-6 fv-row">
                                     <label class="fs-6 fw-semibold mb-2">Nama {{ Str::ucfirst($title) }}</label>
                                     <input type="text" class="form-control"
                                         placeholder="Nama {{ Str::ucfirst($title) }}" name="nama" id="nama"
@@ -131,6 +131,19 @@
                                     <input type="text" class="form-control"
                                         placeholder="Kode {{ Str::ucfirst($title) }}" name="pagu" id="pagu"
                                         maxlength="20" value="{{ $data->pagu ?? '' }}" />
+                                </div>
+                                <div class="col-md-2 fv-row">
+                                    <label class="fs-6 fw-semibold mb-2">Pelaksana {{ Str::ucfirst($title) }}</label>
+                                    <select class="form-select" data-control="select2" data-hide-search="true"
+                                        data-placeholder="Select a Program" name="bagsubag_id" id="bagsubag_id">
+                                        <option value="">Select Program...</option>
+                                        @foreach (Helper::getData('bagsubags')->all() as $v)
+                                            <option
+                                                {{ isset($data->bagsubag_id) && $data->bagsubag_id == $v->id ? 'selected' : '' }}
+                                                value="{{ $v->id }}">{{ $v->kode }}
+                                            </option>
+                                        @endforeach
+                                    </select>
                                 </div>
                             </div>
                             <!--end::Input group-->

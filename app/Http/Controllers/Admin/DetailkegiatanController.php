@@ -119,7 +119,7 @@ class DetailkegiatanController extends Controller
             $kodeakun = Kodeakun::get();
             $detailuraian = Detailuraian::get();
         $rencana = DB::select('select 
-	a.*,
+	a.*,c.kode as bag,
 	CASE WHEN MAX(CASE WHEN b.bulan = 1 THEN 1 ELSE 0 END) = 1 THEN "X" ELSE "" END AS januari,
         CASE WHEN MAX(CASE WHEN b.bulan = 2 THEN 1 ELSE 0 END) = 1 THEN "X" ELSE "" END AS februari,
         CASE WHEN MAX(CASE WHEN b.bulan = 3 THEN 1 ELSE 0 END) = 1 THEN "X" ELSE "" END AS maret,
@@ -132,8 +132,9 @@ class DetailkegiatanController extends Controller
         CASE WHEN MAX(CASE WHEN b.bulan = 10 THEN 1 ELSE 0 END) = 1 THEN "X" ELSE "" END AS oktober,
         CASE WHEN MAX(CASE WHEN b.bulan = 11 THEN 1 ELSE 0 END) = 1 THEN "X" ELSE "" END AS november,
         CASE WHEN MAX(CASE WHEN b.bulan = 12 THEN 1 ELSE 0 END) = 1 THEN "X" ELSE "" END AS desember,
-        COUNT(b.id) AS jk	
+        COUNT(b.id) AS jumkeg	
 from detailuraians as a left join `rencana_kegiatans` as b on b.detailuraian_id = a.id
+left join `bagsubags` as c on c.id = a.bagsubag_id
 GROUP BY a.nama,a.id;');
 
         $pdf = Pdf::loadView('admin.detailkegiatan.pdf', compact('program','kegiatan','kro','ro','komponen','subkomponen','kodeakun','detailuraian','rencana'))->setPaper('F4', 'landscape');

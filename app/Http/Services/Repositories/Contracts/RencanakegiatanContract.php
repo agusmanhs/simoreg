@@ -12,4 +12,5 @@ interface RencanakegiatanContract
 	*/
 
 	public function paginated(array $request);
+	public function filter(array $request);
 }

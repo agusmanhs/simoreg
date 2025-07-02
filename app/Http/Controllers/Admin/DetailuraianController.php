@@ -41,6 +41,7 @@ class DetailuraianController extends Controller
                 "html"       => $view,
             ]);
         } catch (\Exception $e) {
+            dd($e);
             return view('errors.message', ['message' => $e->getMessage()]);
         }
     }

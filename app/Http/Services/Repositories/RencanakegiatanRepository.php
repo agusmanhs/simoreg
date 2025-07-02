@@ -35,4 +35,22 @@ class RencanakegiatanRepository extends BaseRepository implements Rencanakegiata
 			->paginate($perPage);
 	}
 
+	public function filter(array $criteria)
+	{
+		$perPage = $criteria['per_page'] ?? 5;
+		$field = $criteria['sort_field'] ?? 'id';
+		$sortOrder = $criteria['sort_order'] ?? 'desc';
+		$search = $criteria['filter'] ?? '';
+		$fieldx = $criteria['fieldx'] ?? '';
+		return $this->model->when($search, function ($query) use ($search,$fieldx) {
+			$query->where(function($q) use ($search,$fieldx) {
+				$q->whereHas('detailuraian', function($q) use ($search,$fieldx){
+					$q->where("$fieldx",'=',"$search");
+				});
+			} );
+		})
+			->orderBy($field, $sortOrder)
+			->paginate($perPage);
+	}
+
 }

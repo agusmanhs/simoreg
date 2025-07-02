@@ -53,6 +53,9 @@
                                 <th class="min-w-75px">
                                     Pagu
                                 </th>
+                                <th class="min-w-75px">
+                                    Pelaksana
+                                </th>
                                 <th class="text-end min-w-70px">
                                     Actions
                                 </th>

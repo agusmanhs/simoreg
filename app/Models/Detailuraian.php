@@ -15,10 +15,17 @@ class Detailuraian extends Model
         'kode',
         'nama',
         'pagu',
+        'bagsubag_id',
     ];
 
     public function kodeakun(): BelongsTo
     {
         return $this->belongsTo(Kodeakun::class);
     }
+
+    public function bagsubag(): BelongsTo
+    {
+        return $this->belongsTo(Bagsubag::class);
+    }
+
 }

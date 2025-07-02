@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Services\Repositories\Contracts\RencanakegiatanContract;
+use App\Models\RencanaKegiatan;
 use Illuminate\Http\Request;
 
 class RencanakegiatanController extends Controller
@@ -30,8 +31,14 @@ class RencanakegiatanController extends Controller
     {
         try {
             $title = $this->title;
-            
-            $data = $this->repo->paginated($request->all());
+            if($request->bulan==""){
+
+                $data = $this->repo->paginated($request->all());
+            }else{
+
+                $data = $this->repo->filter(['filter'=>$request->bulan,'fieldx'=>'bulan']);
+            }
+
             $perPage = $request->per_page == '' ? 5 : $request->per_page;
             $view = view('admin.' . $title . '.data', compact('data', 'title'))->with('i', ($request->input('page', 1) -
                 1) * $perPage)->render();
@@ -81,9 +88,23 @@ class RencanakegiatanController extends Controller
     {
         try {
             $req = $request->all();
-            $data = $this->repo->update($req, $request->id);
+            if(isset($req['tgl_realisasi'])){
+                // dd($req['id']);
+                // $data = RencanaKegiatan::findOrFail($req['id']);
+                // $data->update([
+                //     'tgl_realisasi' => $req['tgl_realisasi'],
+                //     'catatan' => $req['catatan']
+                // ]);
+                $data = $this->repo->update($req, $request->id);
+                return redirect()->back()->with('success' , 'success');
+
+            }else{
+                $data = $this->repo->update($req, $request->id);
+            }
+            // dd($data);
             return response()->json(['data' => $data, 'success' => true]);
         } catch (\Exception $e) {
+            dd($e);
             return view('errors.message', ['message' => $e->getMessage()]);
         }
     }
