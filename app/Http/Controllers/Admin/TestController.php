@@ -49,7 +49,8 @@ class TestController extends Controller
         CASE WHEN MAX(CASE WHEN b.bulan = 9 THEN 1 ELSE 0 END) = 1 THEN "X" ELSE "" END AS september,
         CASE WHEN MAX(CASE WHEN b.bulan = 10 THEN 1 ELSE 0 END) = 1 THEN "X" ELSE "" END AS oktober,
         CASE WHEN MAX(CASE WHEN b.bulan = 11 THEN 1 ELSE 0 END) = 1 THEN "X" ELSE "" END AS november,
-        CASE WHEN MAX(CASE WHEN b.bulan = 12 THEN 1 ELSE 0 END) = 1 THEN "X" ELSE "" END AS desember	
+        CASE WHEN MAX(CASE WHEN b.bulan = 12 THEN 1 ELSE 0 END) = 1 THEN "X" ELSE "" END AS desember,
+        COUNT(b.id) AS jumkeg	
 from detailuraians as a left join `rencana_kegiatans` as b on b.detailuraian_id = a.id
 GROUP BY a.nama,a.id;');
             return view('admin.' . $title . '.index', compact('title','program','kegiatan','kro','ro','komponen','subkomponen','kodeakun','detailuraian','rencana'));

@@ -128,7 +128,8 @@
                                     <label class="fs-6 fw-semibold mb-2">Bulan Pelaksanaan</label>
                                     <select class="form-select" data-control="select2" data-hide-search="true"
                                         data-placeholder="Select Bulan" name="bulan" id="bulan">
-                                        <option value="{{ $data->bulan ?? '' }}">{{ $data->bulan ?? 'Select Bulan...' }}
+                                        <option value="{{ $data->bulan ?? '' }}">
+                                            {{ Helper::getBulan($data->bulan) ?? 'Select Bulan...' }}
                                         </option>
                                         <option value="1">Januari</option>
                                         <option value="2">Februari</option>
