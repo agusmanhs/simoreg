@@ -13,7 +13,7 @@
         </td>
         <td class="pe-0">
             <span class="fw-semibold">
-                Rp. {{ number_format($v->pagu) }}
+                Rp. {{ number_format($v->detailuraian->pagu) }}
             </span>
         </td>
         <td>

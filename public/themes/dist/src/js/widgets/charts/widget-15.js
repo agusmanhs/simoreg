@@ -17,7 +17,7 @@ var KTChartsWidget15 = (function () {
 
         var root;
 
-        var init = function() {
+        var init = function () {
             // Create root element
             // https://www.amcharts.com/docs/v5/getting-started/#Root_element
             root = am5.Root.new(element);
@@ -46,96 +46,96 @@ var KTChartsWidget15 = (function () {
                     country: "US",
                     visits: 725,
                     icon: "https://www.amcharts.com/wp-content/uploads/flags/united-states.svg",
-                    columnSettings: { 
-                        fill: am5.color(KTUtil.getCssVariableValue('--bs-primary'))        
+                    columnSettings: {
+                        fill: am5.color(KTUtil.getCssVariableValue('--bs-primary'))
                     }
                 },
                 {
                     country: "UK",
                     visits: 625,
                     icon: "https://www.amcharts.com/wp-content/uploads/flags/united-kingdom.svg",
-                    columnSettings: { 
-                        fill: am5.color(KTUtil.getCssVariableValue('--bs-primary'))        
+                    columnSettings: {
+                        fill: am5.color(KTUtil.getCssVariableValue('--bs-primary'))
                     }
                 },
                 {
                     country: "China",
                     visits: 602,
                     icon: "https://www.amcharts.com/wp-content/uploads/flags/china.svg",
-                    columnSettings: { 
-                        fill: am5.color(KTUtil.getCssVariableValue('--bs-primary'))        
+                    columnSettings: {
+                        fill: am5.color(KTUtil.getCssVariableValue('--bs-primary'))
                     }
                 },
                 {
                     country: "Japan",
                     visits: 509,
                     icon: "https://www.amcharts.com/wp-content/uploads/flags/japan.svg",
-                    columnSettings: { 
-                        fill: am5.color(KTUtil.getCssVariableValue('--bs-primary'))        
+                    columnSettings: {
+                        fill: am5.color(KTUtil.getCssVariableValue('--bs-primary'))
                     }
                 },
                 {
                     country: "Germany",
                     visits: 322,
                     icon: "https://www.amcharts.com/wp-content/uploads/flags/germany.svg",
-                    columnSettings: { 
-                        fill: am5.color(KTUtil.getCssVariableValue('--bs-primary'))        
+                    columnSettings: {
+                        fill: am5.color(KTUtil.getCssVariableValue('--bs-primary'))
                     }
                 },
                 {
                     country: "France",
                     visits: 214,
                     icon: "https://www.amcharts.com/wp-content/uploads/flags/france.svg",
-                    columnSettings: { 
-                        fill: am5.color(KTUtil.getCssVariableValue('--bs-primary'))        
+                    columnSettings: {
+                        fill: am5.color(KTUtil.getCssVariableValue('--bs-primary'))
                     }
                 },
                 {
                     country: "India",
                     visits: 204,
                     icon: "https://www.amcharts.com/wp-content/uploads/flags/india.svg",
-                    columnSettings: { 
-                        fill: am5.color(KTUtil.getCssVariableValue('--bs-primary')),        
+                    columnSettings: {
+                        fill: am5.color(KTUtil.getCssVariableValue('--bs-primary')),
                     }
                 },
                 {
                     country: "Spain",
                     visits: 200,
                     icon: "https://www.amcharts.com/wp-content/uploads/flags/spain.svg",
-                    columnSettings: { 
-                        fill: am5.color(KTUtil.getCssVariableValue('--bs-primary'))        
+                    columnSettings: {
+                        fill: am5.color(KTUtil.getCssVariableValue('--bs-primary'))
                     }
                 },
                 {
                     country: "Italy",
                     visits: 165,
                     icon: "https://www.amcharts.com/wp-content/uploads/flags/italy.svg",
-                    columnSettings: { 
-                        fill: am5.color(KTUtil.getCssVariableValue('--bs-primary'))        
+                    columnSettings: {
+                        fill: am5.color(KTUtil.getCssVariableValue('--bs-primary'))
                     }
                 },
                 {
                     country: "Russia",
                     visits: 152,
                     icon: "https://www.amcharts.com/wp-content/uploads/flags/russia.svg",
-                    columnSettings: { 
-                        fill: am5.color(KTUtil.getCssVariableValue('--bs-primary'))        
+                    columnSettings: {
+                        fill: am5.color(KTUtil.getCssVariableValue('--bs-primary'))
                     }
                 },
                 {
                     country: "Norway",
                     visits: 125,
                     icon: "https://www.amcharts.com/wp-content/uploads/flags/norway.svg",
-                    columnSettings: { 
-                        fill: am5.color(KTUtil.getCssVariableValue('--bs-primary'))        
+                    columnSettings: {
+                        fill: am5.color(KTUtil.getCssVariableValue('--bs-primary'))
                     }
                 },
                 {
                     country: "Canada",
                     visits: 99,
                     icon: "https://www.amcharts.com/wp-content/uploads/flags/canada.svg",
-                   columnSettings: { 
-                        fill: am5.color(KTUtil.getCssVariableValue('--bs-primary'))        
+                    columnSettings: {
+                        fill: am5.color(KTUtil.getCssVariableValue('--bs-primary'))
                     }
                 },
             ];
@@ -164,12 +164,12 @@ var KTChartsWidget15 = (function () {
             );
 
             xAxis.get("renderer").labels.template.setAll({
-                paddingTop: 20,                
+                paddingTop: 20,
                 fontWeight: "400",
                 fontSize: 10,
                 fill: am5.color(KTUtil.getCssVariableValue('--bs-gray-500'))
             });
-            
+
             xAxis.get("renderer").grid.template.setAll({
                 disabled: true,
                 strokeOpacity: 0
@@ -235,13 +235,13 @@ var KTChartsWidget15 = (function () {
         });
 
         // Update chart on theme mode change
-		KTThemeMode.on("kt.thememode.change", function() {     
-			// Destroy chart
-			root.dispose();
+        KTThemeMode.on("kt.thememode.change", function () {
+            // Destroy chart
+            root.dispose();
 
-			// Reinit chart
-			init();
-		});
+            // Reinit chart
+            init();
+        });
     };
 
     // Public methods
