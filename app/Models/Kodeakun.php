@@ -20,4 +20,9 @@ class Kodeakun extends Model
     {
         return $this->belongsTo(Subkomponen::class);
     }
+
+    public function detailuraians()
+    {
+        return $this->hasMany(Detailuraian::class, 'kodeakun_id');
+    }
 }

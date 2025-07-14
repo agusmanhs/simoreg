@@ -44,7 +44,7 @@ group by bagsubags.kode') ;
         :warna as warna
 FROM `rencana_kegiatans` 
 GROUP BY bulan
-ORDER BY bulan',['warna' => $warna]);
+ORDER BY convert(bulan, signed)',['warna' => $warna]);
 
 // foreach ($chartperbulan as $item) {
 //     $item->columnSettings = [

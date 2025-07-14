@@ -130,15 +130,30 @@
 
                                         <div class="badge badge-light-danger">Rp. {{ number_format($v->pagu) }}</div>
                                     </td>
-                                    <td>Rp. {{ number_format($v->pagu) }}
+                                    <td>Rp. {{ number_format($v->sisa) }}
+                                        @php
+                                            $persen = round($v->sisa  * 100 / $v->pagu)
+                                        @endphp
                                         <div class="d-flex align-items-center w-100 mw-125px">
 																<!--begin::Progress-->
 																<div class="progress h-6px w-100 me-2 bg-light-success">
-																	<div class="progress-bar bg-success" role="progressbar" style="width: 65%" aria-valuenow="65" aria-valuemin="0" aria-valuemax="100"></div>
+                                                                    @if ($persen>=75)
+                                                                        
+																	<div class="progress-bar bg-success" role="progressbar" style="width: {{ $persen }}%" aria-valuenow="{{ $persen }}" aria-valuemin="0" aria-valuemax="100"></div>
+                                                                    @elseif ($persen>=50)
+                                                                        
+																	<div class="progress-bar bg-primary" role="progressbar" style="width: {{ $persen }}%" aria-valuenow="{{ $persen }}" aria-valuemin="0" aria-valuemax="100"></div>
+                                                                    @elseif ($persen>=25)
+                                                                        
+																	<div class="progress-bar bg-warning" role="progressbar" style="width: {{ $persen }}%" aria-valuenow="{{ $persen }}" aria-valuemin="0" aria-valuemax="100"></div>
+                                                                    @else
+                                                                        
+																	<div class="progress-bar bg-danger" role="progressbar" style="width: {{ $persen }}%" aria-valuenow="{{ $persen }}" aria-valuemin="0" aria-valuemax="100"></div>
+                                                                    @endif
 																</div>
 																<!--end::Progress-->
 																<!--begin::Value-->
-																<span class="text-gray-500 fw-semibold">65%</span>
+																<span class="text-gray-500 fw-semibold">{{ $persen }}%</span>
 																<!--end::Value-->
 															</div>
                                     </td>

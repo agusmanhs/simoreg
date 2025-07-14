@@ -20,4 +20,9 @@ class Subkomponen extends Model
     {
         return $this->belongsTo(Komponen::class);
     }
+
+    public function kodeakuns()
+    {
+        return $this->hasMany(Kodeakun::class, 'subkomponen_id');
+    }
 }

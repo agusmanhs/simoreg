@@ -20,4 +20,9 @@ class Komponen extends Model
     {
         return $this->belongsTo(Ro::class);
     }
+    
+    public function subkomponens()
+    {
+        return $this->hasMany(Subkomponen::class, 'komponen_id');
+    }
 }

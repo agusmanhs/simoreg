@@ -21,4 +21,10 @@ class Kro extends Model
     {
         return $this->belongsTo(Kegiatan::class);
     }
+
+    public function ros()
+    {
+        return $this->hasMany(Ro::class, 'kro_id');
+    }
+    
 }

@@ -20,4 +20,9 @@ class Ro extends Model
     {
         return $this->belongsTo(Kro::class);
     }
+
+    public function komponens()
+    {
+        return $this->hasMany(Komponen::class, 'ro_id');
+    }
 }

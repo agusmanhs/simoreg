@@ -26,6 +26,7 @@ class TestController extends Controller
 
     public function index()
     {
+        
         try {
             $title = $this->title;
             // $program = Program::get();
@@ -36,24 +37,32 @@ class TestController extends Controller
             // $subkomponen = Subkomponen::get();
             // $kodeakun = Kodeakun::get();
             // $detailuraian = Detailuraian::get();
-            $data = DB::select('select 
-	a.*,c.kode as bag,
-	CASE WHEN MAX(CASE WHEN b.bulan = 1 THEN 1 ELSE 0 END) = 1 THEN "X" ELSE "" END AS januari,
-        CASE WHEN MAX(CASE WHEN b.bulan = 2 THEN 1 ELSE 0 END) = 1 THEN "X" ELSE "" END AS februari,
-        CASE WHEN MAX(CASE WHEN b.bulan = 3 THEN 1 ELSE 0 END) = 1 THEN "X" ELSE "" END AS maret,
-        CASE WHEN MAX(CASE WHEN b.bulan = 4 THEN 1 ELSE 0 END) = 1 THEN "X" ELSE "" END AS april,
-        CASE WHEN MAX(CASE WHEN b.bulan = 5 THEN 1 ELSE 0 END) = 1 THEN "X" ELSE "" END AS mei,
-        CASE WHEN MAX(CASE WHEN b.bulan = 6 THEN 1 ELSE 0 END) = 1 THEN "X" ELSE "" END AS juni,
-        CASE WHEN MAX(CASE WHEN b.bulan = 7 THEN 1 ELSE 0 END) = 1 THEN "X" ELSE "" END AS juli,
-        CASE WHEN MAX(CASE WHEN b.bulan = 8 THEN 1 ELSE 0 END) = 1 THEN "X" ELSE "" END AS agustus,
-        CASE WHEN MAX(CASE WHEN b.bulan = 9 THEN 1 ELSE 0 END) = 1 THEN "X" ELSE "" END AS september,
-        CASE WHEN MAX(CASE WHEN b.bulan = 10 THEN 1 ELSE 0 END) = 1 THEN "X" ELSE "" END AS oktober,
-        CASE WHEN MAX(CASE WHEN b.bulan = 11 THEN 1 ELSE 0 END) = 1 THEN "X" ELSE "" END AS november,
-        CASE WHEN MAX(CASE WHEN b.bulan = 12 THEN 1 ELSE 0 END) = 1 THEN "X" ELSE "" END AS desember,
-        COUNT(b.id) AS jumkeg	
-from detailuraians as a left join `rencana_kegiatans` as b on b.detailuraian_id = a.id
-left join `bagsubags` as c on c.id = a.bagsubag_id
-GROUP BY a.nama,a.id;');
+            // dd('alfina');
+            $data = DB::table('detailuraians as a')
+    ->leftJoin('rencana_kegiatans as b', 'b.detailuraian_id', '=', 'a.id')
+    ->leftJoin('bagsubags as c', 'c.id', '=', 'a.bagsubag_id')
+    ->select([
+        'a.nama', 'a.id', 'a.kode', 'a.pagu', 'c.kode as bag',
+        DB::raw('a.pagu - COALESCE(SUM(b.biaya), 0) as sisa'),
+        DB::raw('CASE WHEN MAX(CASE WHEN b.bulan = 1 THEN 1 ELSE 0 END) = 1 THEN "X" ELSE "" END AS januari'),
+        DB::raw('CASE WHEN MAX(CASE WHEN b.bulan = 2 THEN 1 ELSE 0 END) = 1 THEN "X" ELSE "" END AS februari'),
+        DB::raw('CASE WHEN MAX(CASE WHEN b.bulan = 3 THEN 1 ELSE 0 END) = 1 THEN "X" ELSE "" END AS maret'),
+        DB::raw('CASE WHEN MAX(CASE WHEN b.bulan = 4 THEN 1 ELSE 0 END) = 1 THEN "X" ELSE "" END AS april'),
+        DB::raw('CASE WHEN MAX(CASE WHEN b.bulan = 5 THEN 1 ELSE 0 END) = 1 THEN "X" ELSE "" END AS mei'),
+        DB::raw('CASE WHEN MAX(CASE WHEN b.bulan = 6 THEN 1 ELSE 0 END) = 1 THEN "X" ELSE "" END AS juni'),
+        DB::raw('CASE WHEN MAX(CASE WHEN b.bulan = 7 THEN 1 ELSE 0 END) = 1 THEN "X" ELSE "" END AS juli'),
+        DB::raw('CASE WHEN MAX(CASE WHEN b.bulan = 8 THEN 1 ELSE 0 END) = 1 THEN "X" ELSE "" END AS agustus'),
+        DB::raw('CASE WHEN MAX(CASE WHEN b.bulan = 9 THEN 1 ELSE 0 END) = 1 THEN "X" ELSE "" END AS september'),
+        DB::raw('CASE WHEN MAX(CASE WHEN b.bulan = 10 THEN 1 ELSE 0 END) = 1 THEN "X" ELSE "" END AS oktober'),
+        DB::raw('CASE WHEN MAX(CASE WHEN b.bulan = 11 THEN 1 ELSE 0 END) = 1 THEN "X" ELSE "" END AS november'),
+        DB::raw('CASE WHEN MAX(CASE WHEN b.bulan = 12 THEN 1 ELSE 0 END) = 1 THEN "X" ELSE "" END AS desember'),
+        // ... dst untuk bulan lainnya
+        DB::raw('COUNT(b.id) AS jumkeg')
+    ])
+    ->groupBy('a.nama', 'a.id', 'a.kode', 'a.pagu', 'c.kode')
+    ->get();
+            // dd($data);
+            // return view('admin.testing.index', compact('title','data'));
 // dd($data);
             return view('admin.' . $title . '.index', compact('title','data'));
         } catch (\Exception $e) {

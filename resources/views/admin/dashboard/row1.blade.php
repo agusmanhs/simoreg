@@ -85,7 +85,7 @@
 												<div class="card-header pt-7">
 													<!--begin::Title-->
 													<h3 class="card-title align-items-start flex-column">
-														<span class="card-label fw-bold text-gray-900">Kegiatan per Bulan</span>
+														<span class="card-label fw-bold text-gray-900">Realisasi Anggaran per Bagian</span>
 														<span class="text-gray-500 pt-2 fw-semibold fs-6">Statistics by Mounths</span>
 													</h3>
 													<!--end::Title-->
@@ -111,6 +111,7 @@
 		const datachart = rawdata.map(item => ({
 			country : item.country,
 			visits : item.visits,
+			visit : 50,
 			columnSettings : {
 				fill : am5.color(
 					KTUtil.getCssVariableValue(item.warna)
@@ -197,7 +198,7 @@
                     ),
                   });
               var i = a.series.push(
-                am5xy.ColumnSeries.new(t, {
+                am5xy.ColumnSeries.new(t,{
                   xAxis: r,
                   yAxis: o,
                   valueYField: "visits",

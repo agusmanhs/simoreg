@@ -108,9 +108,9 @@
                                 </th>
                                 <th class="min-w-125px">Detail Uraian / Pagu</th>
                                 <th class="min-w-125px">Sisa Anggaran</th>
-                                <th class="min-w-125px">Status</th>
-                                <th class="min-w-125px">Email</th>
-                                <th class="min-w-125px">Created Date</th>
+                                <th class="min-w-125px">Pelaksana</th>
+                                <th class="min-w-125px">Bulan</th>
+                                <th class="min-w-125px">Target</th>
                                 <th class="text-end min-w-70px">Actions</th>
                             </tr>
                         </thead>
@@ -125,21 +125,154 @@
                                     </td>
                                     <td>
                                         <a href="#"
-                                            class="text-gray-800 text-hover-primary mb-1">{{ $v->detailuraian->nama }}</br>
+                                            class="text-gray-800 text-hover-primary mb-1">{{ $v->nama }}</br>
                                         </a>
 
                                         <div class="badge badge-light-danger">Rp. {{ number_format($v->pagu) }}</div>
                                     </td>
-                                    <td>Rp. {{ number_format($v->pagu) }}</td>
+                                    <td>Rp. {{ number_format($v->sisa) }}
+                                        @php
+                                            $persen = round($v->sisa  * 100 / $v->pagu)
+                                        @endphp
+                                        <div class="d-flex align-items-center w-100 mw-125px">
+																<!--begin::Progress-->
+																<div class="progress h-6px w-100 me-2 bg-light-success">
+                                                                    @if ($persen>=75)
+                                                                        
+																	<div class="progress-bar bg-success" role="progressbar" style="width: {{ $persen }}%" aria-valuenow="{{ $persen }}" aria-valuemin="0" aria-valuemax="100"></div>
+                                                                    @elseif ($persen>=50)
+                                                                        
+																	<div class="progress-bar bg-primary" role="progressbar" style="width: {{ $persen }}%" aria-valuenow="{{ $persen }}" aria-valuemin="0" aria-valuemax="100"></div>
+                                                                    @elseif ($persen>=25)
+                                                                        
+																	<div class="progress-bar bg-warning" role="progressbar" style="width: {{ $persen }}%" aria-valuenow="{{ $persen }}" aria-valuemin="0" aria-valuemax="100"></div>
+                                                                    @else
+                                                                        
+																	<div class="progress-bar bg-danger" role="progressbar" style="width: {{ $persen }}%" aria-valuenow="{{ $persen }}" aria-valuemin="0" aria-valuemax="100"></div>
+                                                                    @endif
+																</div>
+																<!--end::Progress-->
+																<!--begin::Value-->
+																<span class="text-gray-500 fw-semibold">{{ $persen }}%</span>
+																<!--end::Value-->
+															</div>
+                                    </td>
                                     <td>
                                         <!--begin::Badges-->
-                                        <div class="badge">{{ $v->bagsubag->kode }}</div>
+                                        <div class="badge">{{ $v->bag }}</div>
                                         <!--end::Badges-->
                                     </td>
-                                    <td>
-                                        <a href="#" class="text-gray-600 text-hover-primary mb-1">smith@kpmg.com</a>
+                                    <td class="d-flex">
+                                        @if ($v->januari=='X')
+                                            <div class="rating-label checked">
+												<i class="ki-duotone ki-pill fs-6"></i>
+											</div>
+                                        @else
+                                            <div class="rating-label">
+												<i class="ki-duotone ki-pill fs-6"></i>
+											</div>
+                                        @endif
+                                        @if ($v->februari=='X')
+                                            <div class="rating-label checked">
+												<i class="ki-duotone ki-pill fs-6"></i>
+											</div>
+                                        @else
+                                            <div class="rating-label">
+												<i class="ki-duotone ki-pill fs-6"></i>
+											</div>
+                                        @endif
+                                        @if ($v->maret=='X')
+                                            <div class="rating-label checked">
+												<i class="ki-duotone ki-pill fs-6"></i>
+											</div>
+                                        @else
+                                            <div class="rating-label">
+												<i class="ki-duotone ki-pill fs-6"></i>
+											</div>
+                                        @endif
+                                        @if ($v->april=='X')
+                                            <div class="rating-label checked">
+												<i class="ki-duotone ki-pill fs-6"></i>
+											</div>
+                                        @else
+                                            <div class="rating-label">
+												<i class="ki-duotone ki-pill fs-6"></i>
+											</div>
+                                        @endif
+                                        @if ($v->mei=='X')
+                                            <div class="rating-label checked">
+												<i class="ki-duotone ki-pill fs-6"></i>
+											</div>
+                                        @else
+                                            <div class="rating-label">
+												<i class="ki-duotone ki-pill fs-6"></i>
+											</div>
+                                        @endif
+                                        @if ($v->juni=='X')
+                                            <div class="rating-label checked">
+												<i class="ki-duotone ki-pill fs-6"></i>
+											</div>
+                                        @else
+                                            <div class="rating-label">
+												<i class="ki-duotone ki-pill fs-6"></i>
+											</div>
+                                        @endif
+                                        @if ($v->juli=='X')
+                                            <div class="rating-label checked">
+												<i class="ki-duotone ki-pill fs-6"></i>
+											</div>
+                                        @else
+                                            <div class="rating-label">
+												<i class="ki-duotone ki-pill fs-6"></i>
+											</div>
+                                        @endif
+                                        @if ($v->agustus=='X')
+                                            <div class="rating-label checked">
+												<i class="ki-duotone ki-pill fs-6"></i>
+											</div>
+                                        @else
+                                            <div class="rating-label">
+												<i class="ki-duotone ki-pill fs-6"></i>
+											</div>
+                                        @endif
+                                        @if ($v->september=='X')
+                                            <div class="rating-label checked">
+												<i class="ki-duotone ki-pill fs-6"></i>
+											</div>
+                                        @else
+                                            <div class="rating-label">
+												<i class="ki-duotone ki-pill fs-6"></i>
+											</div>
+                                        @endif
+                                        @if ($v->oktober=='X')
+                                            <div class="rating-label checked">
+												<i class="ki-duotone ki-pill fs-6"></i>
+											</div>
+                                        @else
+                                            <div class="rating-label">
+												<i class="ki-duotone ki-pill fs-6"></i>
+											</div>
+                                        @endif
+                                        @if ($v->november=='X')
+                                            <div class="rating-label checked">
+												<i class="ki-duotone ki-pill fs-6"></i>
+											</div>
+                                        @else
+                                            <div class="rating-label">
+												<i class="ki-duotone ki-pill fs-6"></i>
+											</div>
+                                        @endif
+                                        @if ($v->desember=='X')
+                                            <div class="rating-label checked">
+												<i class="ki-duotone ki-pill fs-6"></i>
+											</div>
+                                        @else
+                                            <div class="rating-label">
+												<i class="ki-duotone ki-pill fs-6"></i>
+											</div>
+                                        @endif
                                     </td>
-                                    <td>05 May 2024, 2:40 pm</td>
+                                    <td style="text-align: center">{{ $v->jumkeg }}</td>
                                     <td class="text-end">
                                         <a href="#"
                                             class="btn btn-sm btn-light btn-flex btn-center btn-active-light-primary"

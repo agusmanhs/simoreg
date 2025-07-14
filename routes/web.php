@@ -79,6 +79,7 @@ Route::domain('')->group(function () { // development
             Route::delete('/{id}', [DetailkegiatanController::class, 'destroy'])->name('detailkegiatan.delete');
             
             Route::get('/export', [DetailkegiatanController::class, 'export'])->name('detailkegiatan.export');
+            Route::get('/exportbagian', [DetailkegiatanController::class, 'exportbagian'])->name('detailkegiatan.exportbagian');
         });
 
         Route::group(['prefix' => '/testing'], function () {
@@ -231,6 +232,8 @@ Route::domain('')->group(function () { // development
 });
 Route::get('/cc', function () {
     Artisan::call('optimize:clear');
+    Artisan::call('config:clear');
+    Artisan::call('cache:clear');
     Artisan::call('config:cache');
     Artisan::call('view:clear');
     return "Cache is cleared";

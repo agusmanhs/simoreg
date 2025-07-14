@@ -34,7 +34,21 @@
     <?php $i = 0;
 ?>
 
-@foreach ($program as $a)
+{{-- @foreach ($detailuraian as $item)
+
+    {{ $item->kodeakun->subkomponen->komponen->ro->kro->kegiatan->program->nama }}</br>
+    {{ $item->kodeakun->subkomponen->komponen->ro->kro->kegiatan->nama }}</br>
+    {{ $item->kodeakun->subkomponen->komponen->ro->kro->nama }}</br>
+    {{ $item->kodeakun->subkomponen->komponen->ro->nama }}</br>
+    {{ $item->kodeakun->subkomponen->komponen->nama }}</br>
+    {{ $item->kodeakun->subkomponen->nama }}</br>
+    {{ $item->kodeakun->nama }}</br>
+    {{ $item->nama }}</br>
+
+    
+    {{ dd('Dipanegara Computer CLub') }}
+@endforeach --}}
+
 <table class="tengah">
     <tr >
         <td>KEPOLISIAN NEGARA REPUBLIK INDONESIA</td>
@@ -59,13 +73,15 @@
     </tr>
     <tr>
         <td >Unit Eselon 1 / Program</td>
-        <td >: Polda Sulsel / {{ $a->nama }}</td>
+        <td >: Polda Sulsel / xxxxxx xxxx xx</td>
     </tr>
     <tr>
         <td>Satker</td>
         <td >: Biro Operasi Polda Sulsel</td>
     </tr>
 </table>
+
+
 <table class="table1" border="1" cellspacing="0">
     <thead>
         <tr >
@@ -92,11 +108,14 @@
             <th style="text-align: center">XII</th>
         </tr>
     </thead>
+
+@foreach ($program as $a)
+
     <tbody>
             <tr style="background-color: rgb(88, 125, 211)">
                 <td>{{ $a->kode }}</td>
                 <td>{{ strtoupper($a->nama) }}</td>
-                <td style="font-weight: bold;">{{ number_format($a->total) }}</td>
+                <td></td>
                 <td>------</td>
                 <td>------</td>
                 <td>------</td>
@@ -140,7 +159,7 @@
                             <tr style="background-color: rgb(200, 117, 142)">
                                 <td>{{ $c->kode }}</td>
                                 <td style="padding-left: 20px">{{ $c->nama }}</td>
-                                <td style="font-weight: bold;">{{ number_format($c->total) }}</td>
+                                <td>{{ number_format($c->total) }}</td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
@@ -162,7 +181,7 @@
                                     <tr>
                                         <td>{{ $d->kode }}</td>
                                         <td style="padding-left: 30px">{{ $d->nama }}</td>
-                                        <td style="font-weight: bold;">{{ number_format($d->total) }}</td>
+                                        <td>{{ number_format($d->total) }}</td>
                                         <td></td>
                                         <td></td>
                                         <td></td>
@@ -206,7 +225,7 @@
                                                     <tr>
                                                         <td>{{ $f->kode }}</td>
                                                         <td style="padding-left: 50px">{{ $f->nama }}</td>
-                                                        <td style="font-weight: bold;">{{ number_format($f->total) }}</td>
+                                                        <td>{{ number_format($f->total) }}</td>
                                                         <td></td>
                                                         <td></td>
                                                         <td></td>
@@ -246,7 +265,7 @@
                                                                 <td></td>
                                                             </tr>
                                                             @foreach ($rencana as $h)
-                                                                @if ($h->kodeakun_id == $g->id)
+                                                                @if (($h->kodeakun_id == $g->id) and ($h->bagsubag_id==2))
                                                                     <tr>
                                                                         <td>{{ $h->kode }}</td>
                                                                         <td style="padding-left: 70px">{{ $h->nama }}</td>
@@ -282,7 +301,10 @@
                 @endif
             @endforeach
         </tbody>
+        @endforeach
     </table>
+
+
     <table style="width: 100%;">
         <tr>
             <td style="width: 60%;"></td>
@@ -298,7 +320,6 @@
         </tr>
     </table>
     <div style="page-break-after: always;"></div>
-    @endforeach
 
 
 
