@@ -69,8 +69,9 @@
 									@include('admin.dashboard.row1')
 									
 									@include('admin.dashboard.row2')
-
-									<!--begin::Row-->
+									
+									@include('admin.dashboard.row3')
+									{{-- <!--begin::Row-->
 									<div class="row gx-5 gx-xl-10">
 										<!--begin::Col-->
 										<div class="col-xxl-4 mb-5 mb-xl-10">
@@ -1189,7 +1190,7 @@
 										</div>
 										<!--end::Col-->
 									</div>
-									<!--end::Row-->
+									<!--end::Row--> --}}
 								</div>
 								<!--end::Content container-->
 							</div>

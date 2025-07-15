@@ -65,6 +65,10 @@
         <td>Satker</td>
         <td >: Biro Operasi Polda Sulsel</td>
     </tr>
+    <tr>
+        <td>Total pagu</td>
+        <td >: Rp. {{ number_format($a->total) }}</td>
+    </tr>
 </table>
 <table class="table1" border="1" cellspacing="0">
     <thead>
@@ -115,10 +119,10 @@
             </tr>
             @foreach ($kegiatan as $b)
                 @if ($b->program_id == $a->id)
-                    <tr>
+                    <tr style="background-color: rgb(144, 171, 233)">
                         <td>{{ $b->kode }}</td>
                         <td style="padding-left: 10px">{{ $b->nama }}</td>
-                        <td></td>
+                        <td style="font-weight: bold;">{{ number_format($b->total) }}</td>
                         <td></td>
                         <td></td>
                         <td></td>
@@ -184,7 +188,7 @@
                                             <tr>
                                                 <td>{{ $e->kode }}</td>
                                                 <td style="padding-left: 40px">{{ $e->nama }}</td>
-                                                <td></td>
+                                                <td style="font-weight: bold;">{{ number_format($e->total) }}</td>
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
@@ -228,7 +232,7 @@
                                                             <tr>
                                                                 <td>{{ $g->kode }}</td>
                                                                 <td style="padding-left: 60px">{{ $g->nama }}</td>
-                                                                <td></td>
+                                                                <td style="font-weight: bold;">{{ number_format($g->total) }}</td>
                                                                 <td></td>
                                                                 <td></td>
                                                                 <td></td>

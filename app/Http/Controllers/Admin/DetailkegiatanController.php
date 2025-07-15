@@ -46,7 +46,7 @@ class DetailkegiatanController extends Controller
                     DB::raw('CASE WHEN MAX(CASE WHEN b.bulan = 10 THEN 1 ELSE 0 END) = 1 THEN "X" ELSE "" END AS oktober'),
                     DB::raw('CASE WHEN MAX(CASE WHEN b.bulan = 11 THEN 1 ELSE 0 END) = 1 THEN "X" ELSE "" END AS november'),
                     DB::raw('CASE WHEN MAX(CASE WHEN b.bulan = 12 THEN 1 ELSE 0 END) = 1 THEN "X" ELSE "" END AS desember'),
-                    // ... dst untuk bulan lainnya
+                    DB::raw('COUNT(CASE WHEN b.tgl_realisasi IS NOT NULL THEN 1 END) AS jumreal'),
                     DB::raw('COUNT(b.id) AS jumkeg')])
                 ->groupBy('a.nama', 'a.id', 'a.kode', 'a.pagu', 'c.kode')
                 ->get();
@@ -142,8 +142,17 @@ class DetailkegiatanController extends Controller
                         ->leftJoin('detailuraians', 'kodeakuns.id', '=', 'detailuraians.kodeakun_id')
                         ->groupBy('programs.id', 'programs.nama', 'programs.kode')
                         ->get();
-            $programlain = Program::get();
-            $kegiatan = Kegiatan::get();
+            // $programlain = Program::get();
+            $kegiatan = Kegiatan::selectRaw('kegiatans.*, COALESCE(SUM(detailuraians.pagu), 0) as total')
+                        ->leftJoin('kros', 'kegiatans.id', '=', 'kros.kegiatan_id')
+                        ->leftJoin('ros', 'kros.id', '=', 'ros.kro_id')
+                        ->leftJoin('komponens', 'ros.id', '=', 'komponens.ro_id')
+                        ->leftJoin('subkomponens', 'komponens.id', '=', 'subkomponens.komponen_id')
+                        ->leftJoin('kodeakuns', 'subkomponens.id', '=', 'kodeakuns.subkomponen_id')
+                        ->leftJoin('detailuraians', 'kodeakuns.id', '=', 'detailuraians.kodeakun_id')
+                        ->groupBy('kegiatans.id', 'kegiatans.nama', 'kegiatans.kode')
+                        ->get();
+            // $kegiatan = Kegiatan::get();
 //             $kro = DB::select('select kros.*, SUM(detailuraians.pagu) as total from kros
 // left join ros on kros.id = ros.`kro_id`
 // left join komponens on ros.id = komponens.`ro_id`
@@ -166,70 +175,74 @@ class DetailkegiatanController extends Controller
                         ->leftJoin('detailuraians', 'kodeakuns.id', '=', 'detailuraians.kodeakun_id')
                         ->groupBy('ros.id', 'ros.kode', 'ros.nama', 'ros.kro_id')
                         ->get();
-            $komponen = Komponen::get();
+            $komponen = Komponen::selectRaw('komponens.*, COALESCE(SUM(detailuraians.pagu), 0) as total')
+                        ->leftJoin('subkomponens', 'komponens.id', '=', 'subkomponens.komponen_id')
+                        ->leftJoin('kodeakuns', 'subkomponens.id', '=', 'kodeakuns.subkomponen_id')
+                        ->leftJoin('detailuraians', 'kodeakuns.id', '=', 'detailuraians.kodeakun_id')
+                        ->groupBy('komponens.id', 'komponens.kode', 'komponens.nama')
+                        ->get();
             $subkomponen = Subkomponen::selectRaw('subkomponens.id, subkomponens.kode, subkomponens.nama, subkomponens.komponen_id,   COALESCE(SUM(detailuraians.pagu), 0) as total')
                         ->leftJoin('kodeakuns', 'subkomponens.id', '=', 'kodeakuns.subkomponen_id')
                         ->leftJoin('detailuraians', 'kodeakuns.id', '=', 'detailuraians.kodeakun_id')
                         ->groupBy('subkomponens.id', 'subkomponens.kode', 'subkomponens.nama', 'subkomponens.komponen_id')
                         ->get();
-            $kodeakun = Kodeakun::get();
+            $kodeakun = Kodeakun::selectRaw('kodeakuns.*,   COALESCE(SUM(detailuraians.pagu), 0) as total')
+                        ->leftJoin('detailuraians', 'kodeakuns.id', '=', 'detailuraians.kodeakun_id')
+                        ->groupBy('kodeakuns.id', 'kodeakuns.kode', 'kodeakuns.nama')
+                        ->get();
             $detailuraian = Detailuraian::get();
-            $rencana = DB::table('detailuraians as a')
-    ->leftJoin('bagsubags as c', 'c.id', '=', 'a.bagsubag_id')
-    ->leftJoin(DB::raw('(
-        SELECT detailuraian_id,
-               COUNT(id) as jumkeg,
-               MAX(CASE WHEN bulan = 1 THEN 1 ELSE 0 END) as jan,
-               MAX(CASE WHEN bulan = 2 THEN 1 ELSE 0 END) as feb,
-               MAX(CASE WHEN bulan = 3 THEN 1 ELSE 0 END) as mar,
-               MAX(CASE WHEN bulan = 4 THEN 1 ELSE 0 END) as apr,
-               MAX(CASE WHEN bulan = 5 THEN 1 ELSE 0 END) as mei,
-               MAX(CASE WHEN bulan = 6 THEN 1 ELSE 0 END) as jun,
-               MAX(CASE WHEN bulan = 7 THEN 1 ELSE 0 END) as jul,
-               MAX(CASE WHEN bulan = 8 THEN 1 ELSE 0 END) as agu,
-               MAX(CASE WHEN bulan = 9 THEN 1 ELSE 0 END) as sep,
-               MAX(CASE WHEN bulan = 10 THEN 1 ELSE 0 END) as okt,
-               MAX(CASE WHEN bulan = 11 THEN 1 ELSE 0 END) as nov,
-               MAX(CASE WHEN bulan = 12 THEN 1 ELSE 0 END) as des
-        FROM rencana_kegiatans 
-        GROUP BY detailuraian_id
-    ) as monthly'), 'a.id', '=', 'monthly.detailuraian_id')
-    ->select([
-        'a.*',
-        'c.kode as bag',
-        DB::raw('COALESCE(monthly.jumkeg, 0) as jumkeg'),
-        DB::raw('CASE WHEN monthly.jan = 1 THEN "X" ELSE "" END as januari'),
-        DB::raw('CASE WHEN monthly.feb = 1 THEN "X" ELSE "" END as februari'),
-        DB::raw('CASE WHEN monthly.mar = 1 THEN "X" ELSE "" END as maret'),
-        DB::raw('CASE WHEN monthly.apr = 1 THEN "X" ELSE "" END as april'),
-        DB::raw('CASE WHEN monthly.mei = 1 THEN "X" ELSE "" END as mei'),
-        DB::raw('CASE WHEN monthly.jun = 1 THEN "X" ELSE "" END as juni'),
-        DB::raw('CASE WHEN monthly.jul = 1 THEN "X" ELSE "" END as juli'),
-        DB::raw('CASE WHEN monthly.agu = 1 THEN "X" ELSE "" END as agustus'),
-        DB::raw('CASE WHEN monthly.sep = 1 THEN "X" ELSE "" END as september'),
-        DB::raw('CASE WHEN monthly.okt = 1 THEN "X" ELSE "" END as oktober'),
-        DB::raw('CASE WHEN monthly.nov = 1 THEN "X" ELSE "" END as november'),
-        DB::raw('CASE WHEN monthly.des = 1 THEN "X" ELSE "" END as desember')
-    ])
-    ->get();
-        $rencanalain = DB::select('select 
-	a.*,c.kode as bag,
-	CASE WHEN MAX(CASE WHEN b.bulan = 1 THEN 1 ELSE 0 END) = 1 THEN "X" ELSE "" END AS januari,
-        CASE WHEN MAX(CASE WHEN b.bulan = 2 THEN 1 ELSE 0 END) = 1 THEN "X" ELSE "" END AS februari,
-        CASE WHEN MAX(CASE WHEN b.bulan = 3 THEN 1 ELSE 0 END) = 1 THEN "X" ELSE "" END AS maret,
-        CASE WHEN MAX(CASE WHEN b.bulan = 4 THEN 1 ELSE 0 END) = 1 THEN "X" ELSE "" END AS april,
-        CASE WHEN MAX(CASE WHEN b.bulan = 5 THEN 1 ELSE 0 END) = 1 THEN "X" ELSE "" END AS mei,
-        CASE WHEN MAX(CASE WHEN b.bulan = 6 THEN 1 ELSE 0 END) = 1 THEN "X" ELSE "" END AS juni,
-        CASE WHEN MAX(CASE WHEN b.bulan = 7 THEN 1 ELSE 0 END) = 1 THEN "X" ELSE "" END AS juli,
-        CASE WHEN MAX(CASE WHEN b.bulan = 8 THEN 1 ELSE 0 END) = 1 THEN "X" ELSE "" END AS agustus,
-        CASE WHEN MAX(CASE WHEN b.bulan = 9 THEN 1 ELSE 0 END) = 1 THEN "X" ELSE "" END AS september,
-        CASE WHEN MAX(CASE WHEN b.bulan = 10 THEN 1 ELSE 0 END) = 1 THEN "X" ELSE "" END AS oktober,
-        CASE WHEN MAX(CASE WHEN b.bulan = 11 THEN 1 ELSE 0 END) = 1 THEN "X" ELSE "" END AS november,
-        CASE WHEN MAX(CASE WHEN b.bulan = 12 THEN 1 ELSE 0 END) = 1 THEN "X" ELSE "" END AS desember,
-        COUNT(b.id) AS jumkeg	
-from detailuraians as a left join `rencana_kegiatans` as b on b.detailuraian_id = a.id
-left join `bagsubags` as c on c.id = a.bagsubag_id
-GROUP BY a.nama,a.id;');
+            $rencanalain = DB::table('detailuraians as a')
+                        ->leftJoin('bagsubags as c', 'c.id', '=', 'a.bagsubag_id')
+                        ->leftJoin(DB::raw('(SELECT detailuraian_id,
+                            COUNT(id) as jumkeg,
+                            MAX(CASE WHEN bulan = 1 THEN 1 ELSE 0 END) as jan,
+                            MAX(CASE WHEN bulan = 2 THEN 1 ELSE 0 END) as feb,
+                            MAX(CASE WHEN bulan = 3 THEN 1 ELSE 0 END) as mar,
+                            MAX(CASE WHEN bulan = 4 THEN 1 ELSE 0 END) as apr,
+                            MAX(CASE WHEN bulan = 5 THEN 1 ELSE 0 END) as mei,
+                            MAX(CASE WHEN bulan = 6 THEN 1 ELSE 0 END) as jun,
+                            MAX(CASE WHEN bulan = 7 THEN 1 ELSE 0 END) as jul,
+                            MAX(CASE WHEN bulan = 8 THEN 1 ELSE 0 END) as agu,
+                            MAX(CASE WHEN bulan = 9 THEN 1 ELSE 0 END) as sep,
+                            MAX(CASE WHEN bulan = 10 THEN 1 ELSE 0 END) as okt,
+                            MAX(CASE WHEN bulan = 11 THEN 1 ELSE 0 END) as nov,
+                            MAX(CASE WHEN bulan = 12 THEN 1 ELSE 0 END) as des
+                            FROM rencana_kegiatans 
+                            GROUP BY detailuraian_id) as monthly'), 'a.id', '=', 'monthly.detailuraian_id')
+                        ->select(['a.*',
+                            'c.kode as bag',
+                            DB::raw('COALESCE(monthly.jumkeg, 0) as jumkeg'),
+                            DB::raw('CASE WHEN monthly.jan = 1 THEN "X" ELSE "" END as januari'),
+                            DB::raw('CASE WHEN monthly.feb = 1 THEN "X" ELSE "" END as februari'),
+                            DB::raw('CASE WHEN monthly.mar = 1 THEN "X" ELSE "" END as maret'),
+                            DB::raw('CASE WHEN monthly.apr = 1 THEN "X" ELSE "" END as april'),
+                            DB::raw('CASE WHEN monthly.mei = 1 THEN "X" ELSE "" END as mei'),
+                            DB::raw('CASE WHEN monthly.jun = 1 THEN "X" ELSE "" END as juni'),
+                            DB::raw('CASE WHEN monthly.jul = 1 THEN "X" ELSE "" END as juli'),
+                            DB::raw('CASE WHEN monthly.agu = 1 THEN "X" ELSE "" END as agustus'),
+                            DB::raw('CASE WHEN monthly.sep = 1 THEN "X" ELSE "" END as september'),
+                            DB::raw('CASE WHEN monthly.okt = 1 THEN "X" ELSE "" END as oktober'),
+                            DB::raw('CASE WHEN monthly.nov = 1 THEN "X" ELSE "" END as november'),
+                            DB::raw('CASE WHEN monthly.des = 1 THEN "X" ELSE "" END as desember')])
+                        ->get();
+        $rencana = DB::select('select 
+                        a.*,c.kode as bag,
+                        CASE WHEN MAX(CASE WHEN b.bulan = 1 THEN 1 ELSE 0 END) = 1 THEN "X" ELSE "" END AS januari,
+                        CASE WHEN MAX(CASE WHEN b.bulan = 2 THEN 1 ELSE 0 END) = 1 THEN "X" ELSE "" END AS februari,
+                        CASE WHEN MAX(CASE WHEN b.bulan = 3 THEN 1 ELSE 0 END) = 1 THEN "X" ELSE "" END AS maret,
+                        CASE WHEN MAX(CASE WHEN b.bulan = 4 THEN 1 ELSE 0 END) = 1 THEN "X" ELSE "" END AS april,
+                        CASE WHEN MAX(CASE WHEN b.bulan = 5 THEN 1 ELSE 0 END) = 1 THEN "X" ELSE "" END AS mei,
+                        CASE WHEN MAX(CASE WHEN b.bulan = 6 THEN 1 ELSE 0 END) = 1 THEN "X" ELSE "" END AS juni,
+                        CASE WHEN MAX(CASE WHEN b.bulan = 7 THEN 1 ELSE 0 END) = 1 THEN "X" ELSE "" END AS juli,
+                        CASE WHEN MAX(CASE WHEN b.bulan = 8 THEN 1 ELSE 0 END) = 1 THEN "X" ELSE "" END AS agustus,
+                        CASE WHEN MAX(CASE WHEN b.bulan = 9 THEN 1 ELSE 0 END) = 1 THEN "X" ELSE "" END AS september,
+                        CASE WHEN MAX(CASE WHEN b.bulan = 10 THEN 1 ELSE 0 END) = 1 THEN "X" ELSE "" END AS oktober,
+                        CASE WHEN MAX(CASE WHEN b.bulan = 11 THEN 1 ELSE 0 END) = 1 THEN "X" ELSE "" END AS november,
+                        CASE WHEN MAX(CASE WHEN b.bulan = 12 THEN 1 ELSE 0 END) = 1 THEN "X" ELSE "" END AS desember,
+                        COUNT(b.id) AS jumkeg	
+                        from detailuraians as a left join `rencana_kegiatans` as b on b.detailuraian_id = a.id
+                        left join `bagsubags` as c on c.id = a.bagsubag_id
+                        GROUP BY a.nama,a.id;');
 
         $pdf = Pdf::loadView('admin.detailkegiatan.pdf', compact('program','kegiatan','kro','ro','komponen','subkomponen','kodeakun','detailuraian','rencana'))->setPaper('F4', 'landscape');
         return $pdf->stream('rencana.pdf');

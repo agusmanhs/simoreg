@@ -451,7 +451,7 @@ KTUtil.onDOMContentLoaded(function () {
                                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                             },
                             type: "DELETE",
-                            url: '{{ url("admin/$title") }}/' + id,
+                            url: '{{ url("admin/rencana-kegiatan") }}/' + id,
                             success: function(data) {
                                 loadpage(5, '');
                                 toastr.success("Successful delete data!");

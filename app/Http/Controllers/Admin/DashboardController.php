@@ -12,11 +12,15 @@ class DashboardController extends Controller
     public function index()
     {
         $perbagian = DB::select('select bagsubags.kode, sum(detailuraians.pagu) as nilai
-from bagsubags 
-left join detailuraians on bagsubags.id = detailuraians.`bagsubag_id`
-group by bagsubags.kode;') ;
+            from bagsubags 
+            left join detailuraians on bagsubags.id = detailuraians.`bagsubag_id`
+            group by bagsubags.kode;') ;
+        $perbagianreal = DB::select('select bagsubags.kode, sum(rencana_kegiatans.biaya) as nilai
+            from bagsubags 
+            left join `rencana_kegiatans` on bagsubags.id = `rencana_kegiatans`.`bagsubag_id`
+            group by bagsubags.kode;') ;
         
-    $chartperbagian = DB::select('select bagsubags.kode as nama, count(`rencana_kegiatans`.id) as nilai
+        $chartperbagian = DB::select('select bagsubags.kode as nama, count(`rencana_kegiatans`.id) as nilai
 from bagsubags 
 left join `rencana_kegiatans` on bagsubags.id = `rencana_kegiatans`.`bagsubag_id`
 group by bagsubags.kode') ;
@@ -55,6 +59,6 @@ ORDER BY convert(bulan, signed)',['warna' => $warna]);
         // dd($chartperbulan);
         // $chartperbulan = (json_encode($chartperbulan));
         $chartperbagian = (json_encode($chartperbagian));
-        return view('admin.dashboard', compact('perbagian','chartperbulan','chartperbagian'));
+        return view('admin.dashboard', compact('perbagian','perbagianreal','chartperbulan','chartperbagian'));
     }
 }

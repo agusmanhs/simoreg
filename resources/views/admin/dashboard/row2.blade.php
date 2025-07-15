@@ -31,7 +31,7 @@
 												<div class="card-header pt-5">
 													<!--begin::Title-->
 													<h3 class="card-title align-items-start flex-column">
-														<span class="card-label fw-bold text-gray-800">Top Performing Pages</span>
+														<span class="card-label fw-bold text-gray-800">Target dan Realisasi Kegiatan perbulan</span>
 														<span class="text-gray-500 pt-1 fw-semibold fs-6">Counted in Millions</span>
 													</h3>
 													<!--end::Title-->
@@ -54,7 +54,7 @@
 									</div>
 									<!--end::Row-->
 
-                  {{ json_encode($chartperbagian) }}
+                  {{-- {{ json_encode($chartperbagian) }} --}}
                   @php
                       $data = json_decode($chartperbagian, true);
                       $bagian = array_column($data, 'nama');
