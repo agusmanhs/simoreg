@@ -54,7 +54,7 @@
                             <div class="w-200px me-3">
                                 <!--begin::Select2-->
                                 <select class="form-select form-select-solid" data-control="select2" data-hide-search="true"
-                                    data-placeholder="Status" data-kt-ecommerce-order-filter="anu">
+                                    data-placeholder="Bagian" data-kt-ecommerce-order-filter="anu">
                                     <option></option>
                                     <option value="all">All</option>
                                     <option value="KA SPKT">KA SPKT</option>
@@ -132,30 +132,38 @@
                                     </td>
                                     <td>Rp. {{ number_format($v->sisa) }}
                                         @php
-                                            $persen = round($v->sisa  * 100 / $v->pagu)
+                                            $persen = round(($v->sisa * 100) / $v->pagu);
                                         @endphp
                                         <div class="d-flex align-items-center w-100 mw-125px">
-																<!--begin::Progress-->
-																<div class="progress h-6px w-100 me-2 bg-light-success">
-                                                                    @if ($persen>=75)
-                                                                        
-																	<div class="progress-bar bg-success" role="progressbar" style="width: {{ $persen }}%" aria-valuenow="{{ $persen }}" aria-valuemin="0" aria-valuemax="100"></div>
-                                                                    @elseif ($persen>=50)
-                                                                        
-																	<div class="progress-bar bg-primary" role="progressbar" style="width: {{ $persen }}%" aria-valuenow="{{ $persen }}" aria-valuemin="0" aria-valuemax="100"></div>
-                                                                    @elseif ($persen>=25)
-                                                                        
-																	<div class="progress-bar bg-warning" role="progressbar" style="width: {{ $persen }}%" aria-valuenow="{{ $persen }}" aria-valuemin="0" aria-valuemax="100"></div>
-                                                                    @else
-                                                                        
-																	<div class="progress-bar bg-danger" role="progressbar" style="width: {{ $persen }}%" aria-valuenow="{{ $persen }}" aria-valuemin="0" aria-valuemax="100"></div>
-                                                                    @endif
-																</div>
-																<!--end::Progress-->
-																<!--begin::Value-->
-																<span class="text-gray-500 fw-semibold">{{ $persen }}%</span>
-																<!--end::Value-->
-															</div>
+                                            <!--begin::Progress-->
+                                            <div class="progress h-6px w-100 me-2 bg-light-success">
+                                                @if ($persen >= 75)
+                                                    <div class="progress-bar bg-success" role="progressbar"
+                                                        style="width: {{ $persen }}%"
+                                                        aria-valuenow="{{ $persen }}" aria-valuemin="0"
+                                                        aria-valuemax="100"></div>
+                                                @elseif ($persen >= 50)
+                                                    <div class="progress-bar bg-primary" role="progressbar"
+                                                        style="width: {{ $persen }}%"
+                                                        aria-valuenow="{{ $persen }}" aria-valuemin="0"
+                                                        aria-valuemax="100"></div>
+                                                @elseif ($persen >= 25)
+                                                    <div class="progress-bar bg-warning" role="progressbar"
+                                                        style="width: {{ $persen }}%"
+                                                        aria-valuenow="{{ $persen }}" aria-valuemin="0"
+                                                        aria-valuemax="100"></div>
+                                                @else
+                                                    <div class="progress-bar bg-danger" role="progressbar"
+                                                        style="width: {{ $persen }}%"
+                                                        aria-valuenow="{{ $persen }}" aria-valuemin="0"
+                                                        aria-valuemax="100"></div>
+                                                @endif
+                                            </div>
+                                            <!--end::Progress-->
+                                            <!--begin::Value-->
+                                            <span class="text-gray-500 fw-semibold">{{ $persen }}%</span>
+                                            <!--end::Value-->
+                                        </div>
                                     </td>
                                     <td>
                                         <!--begin::Badges-->
@@ -163,113 +171,113 @@
                                         <!--end::Badges-->
                                     </td>
                                     <td class="d-flex">
-                                        @if ($v->januari=='X')
+                                        @if ($v->januari == 'X')
                                             <div class="rating-label checked">
-												<i class="ki-duotone ki-pill fs-6"></i>
-											</div>
+                                                <i class="ki-duotone ki-pill fs-6"></i>
+                                            </div>
                                         @else
                                             <div class="rating-label">
-												<i class="ki-duotone ki-pill fs-6"></i>
-											</div>
+                                                <i class="ki-duotone ki-pill fs-6"></i>
+                                            </div>
                                         @endif
-                                        @if ($v->februari=='X')
+                                        @if ($v->februari == 'X')
                                             <div class="rating-label checked">
-												<i class="ki-duotone ki-pill fs-6"></i>
-											</div>
+                                                <i class="ki-duotone ki-pill fs-6"></i>
+                                            </div>
                                         @else
                                             <div class="rating-label">
-												<i class="ki-duotone ki-pill fs-6"></i>
-											</div>
+                                                <i class="ki-duotone ki-pill fs-6"></i>
+                                            </div>
                                         @endif
-                                        @if ($v->maret=='X')
+                                        @if ($v->maret == 'X')
                                             <div class="rating-label checked">
-												<i class="ki-duotone ki-pill fs-6"></i>
-											</div>
+                                                <i class="ki-duotone ki-pill fs-6"></i>
+                                            </div>
                                         @else
                                             <div class="rating-label">
-												<i class="ki-duotone ki-pill fs-6"></i>
-											</div>
+                                                <i class="ki-duotone ki-pill fs-6"></i>
+                                            </div>
                                         @endif
-                                        @if ($v->april=='X')
+                                        @if ($v->april == 'X')
                                             <div class="rating-label checked">
-												<i class="ki-duotone ki-pill fs-6"></i>
-											</div>
+                                                <i class="ki-duotone ki-pill fs-6"></i>
+                                            </div>
                                         @else
                                             <div class="rating-label">
-												<i class="ki-duotone ki-pill fs-6"></i>
-											</div>
+                                                <i class="ki-duotone ki-pill fs-6"></i>
+                                            </div>
                                         @endif
-                                        @if ($v->mei=='X')
+                                        @if ($v->mei == 'X')
                                             <div class="rating-label checked">
-												<i class="ki-duotone ki-pill fs-6"></i>
-											</div>
+                                                <i class="ki-duotone ki-pill fs-6"></i>
+                                            </div>
                                         @else
                                             <div class="rating-label">
-												<i class="ki-duotone ki-pill fs-6"></i>
-											</div>
+                                                <i class="ki-duotone ki-pill fs-6"></i>
+                                            </div>
                                         @endif
-                                        @if ($v->juni=='X')
+                                        @if ($v->juni == 'X')
                                             <div class="rating-label checked">
-												<i class="ki-duotone ki-pill fs-6"></i>
-											</div>
+                                                <i class="ki-duotone ki-pill fs-6"></i>
+                                            </div>
                                         @else
                                             <div class="rating-label">
-												<i class="ki-duotone ki-pill fs-6"></i>
-											</div>
+                                                <i class="ki-duotone ki-pill fs-6"></i>
+                                            </div>
                                         @endif
-                                        @if ($v->juli=='X')
+                                        @if ($v->juli == 'X')
                                             <div class="rating-label checked">
-												<i class="ki-duotone ki-pill fs-6"></i>
-											</div>
+                                                <i class="ki-duotone ki-pill fs-6"></i>
+                                            </div>
                                         @else
                                             <div class="rating-label">
-												<i class="ki-duotone ki-pill fs-6"></i>
-											</div>
+                                                <i class="ki-duotone ki-pill fs-6"></i>
+                                            </div>
                                         @endif
-                                        @if ($v->agustus=='X')
+                                        @if ($v->agustus == 'X')
                                             <div class="rating-label checked">
-												<i class="ki-duotone ki-pill fs-6"></i>
-											</div>
+                                                <i class="ki-duotone ki-pill fs-6"></i>
+                                            </div>
                                         @else
                                             <div class="rating-label">
-												<i class="ki-duotone ki-pill fs-6"></i>
-											</div>
+                                                <i class="ki-duotone ki-pill fs-6"></i>
+                                            </div>
                                         @endif
-                                        @if ($v->september=='X')
+                                        @if ($v->september == 'X')
                                             <div class="rating-label checked">
-												<i class="ki-duotone ki-pill fs-6"></i>
-											</div>
+                                                <i class="ki-duotone ki-pill fs-6"></i>
+                                            </div>
                                         @else
                                             <div class="rating-label">
-												<i class="ki-duotone ki-pill fs-6"></i>
-											</div>
+                                                <i class="ki-duotone ki-pill fs-6"></i>
+                                            </div>
                                         @endif
-                                        @if ($v->oktober=='X')
+                                        @if ($v->oktober == 'X')
                                             <div class="rating-label checked">
-												<i class="ki-duotone ki-pill fs-6"></i>
-											</div>
+                                                <i class="ki-duotone ki-pill fs-6"></i>
+                                            </div>
                                         @else
                                             <div class="rating-label">
-												<i class="ki-duotone ki-pill fs-6"></i>
-											</div>
+                                                <i class="ki-duotone ki-pill fs-6"></i>
+                                            </div>
                                         @endif
-                                        @if ($v->november=='X')
+                                        @if ($v->november == 'X')
                                             <div class="rating-label checked">
-												<i class="ki-duotone ki-pill fs-6"></i>
-											</div>
+                                                <i class="ki-duotone ki-pill fs-6"></i>
+                                            </div>
                                         @else
                                             <div class="rating-label">
-												<i class="ki-duotone ki-pill fs-6"></i>
-											</div>
+                                                <i class="ki-duotone ki-pill fs-6"></i>
+                                            </div>
                                         @endif
-                                        @if ($v->desember=='X')
+                                        @if ($v->desember == 'X')
                                             <div class="rating-label checked">
-												<i class="ki-duotone ki-pill fs-6"></i>
-											</div>
+                                                <i class="ki-duotone ki-pill fs-6"></i>
+                                            </div>
                                         @else
                                             <div class="rating-label">
-												<i class="ki-duotone ki-pill fs-6"></i>
-											</div>
+                                                <i class="ki-duotone ki-pill fs-6"></i>
+                                            </div>
                                         @endif
                                     </td>
                                     <td style="text-align: center">{{ $v->jumkeg }}</td>
@@ -787,7 +795,7 @@
                         <!--begin::Modal body-->
                         <div class="modal-body scroll-y mx-5 mx-xl-15 my-7">
                             <!--begin::Form-->
-                            <form id="kt_customers_export_form" class="form"
+                            <form id="kt_customers_export_form" class="form" method="POST"
                                 action="{{ route('detailkegiatan.export') }}" target="_blank">
                                 @csrf
                                 <!--begin::Input group-->
@@ -797,7 +805,7 @@
                                     <!--end::Label-->
                                     <!--begin::Input-->
                                     <select data-control="select2" data-placeholder="Select a format"
-                                        data-hide-search="true" name="format" class="form-select form-select-solid">
+                                        data-hide-search="true" name="bagian" id="bagian" class="form-select form-select-solid">
                                         <option value="all">All</option>
                                         @foreach (Helper::getData('bagsubags')->all() as $v)
                                             <option value="{{ $v->id }}">{{ $v->kode }}</option>

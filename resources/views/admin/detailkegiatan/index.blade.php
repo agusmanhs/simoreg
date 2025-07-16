@@ -824,7 +824,7 @@
                         <!--begin::Modal body-->
                         <div class="modal-body scroll-y mx-5 mx-xl-15 my-7">
                             <!--begin::Form-->
-                            <form id="kt_customers_export_form" class="form"
+                            <form id="kt_customers_export_form" class="form" method="POST"
                                 action="{{ route('detailkegiatan.export') }}" target="_blank">
                                 @csrf
                                 <!--begin::Input group-->
@@ -834,8 +834,8 @@
                                     <!--end::Label-->
                                     <!--begin::Input-->
                                     <select data-control="select2" data-placeholder="Select a format"
-                                        data-hide-search="true" name="format" class="form-select form-select-solid">
-                                        <option value="all">All</option>
+                                        data-hide-search="true" name="bagian" class="form-select form-select-solid">
+                                        <option value="0">All</option>
                                         @foreach (Helper::getData('bagsubags')->all() as $v)
                                             <option value="{{ $v->id }}">{{ $v->kode }}</option>
                                         @endforeach

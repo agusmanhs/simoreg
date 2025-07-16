@@ -128,8 +128,9 @@ class DetailkegiatanController extends Controller
         }
     }
 
-    public function export()
+    public function export(Request $request)
     {
+        // dd($request->bagian);
         $title = $this->title;
         DB::statement("SET SESSION sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''))");
             $program = Program::selectRaw('programs.id, programs.kode, programs.nama, COALESCE(SUM(detailuraians.pagu), 0) as total')
@@ -225,27 +226,52 @@ class DetailkegiatanController extends Controller
                             DB::raw('CASE WHEN monthly.nov = 1 THEN "X" ELSE "" END as november'),
                             DB::raw('CASE WHEN monthly.des = 1 THEN "X" ELSE "" END as desember')])
                         ->get();
-        $rencana = DB::select('select 
-                        a.*,c.kode as bag,
-                        CASE WHEN MAX(CASE WHEN b.bulan = 1 THEN 1 ELSE 0 END) = 1 THEN "X" ELSE "" END AS januari,
-                        CASE WHEN MAX(CASE WHEN b.bulan = 2 THEN 1 ELSE 0 END) = 1 THEN "X" ELSE "" END AS februari,
-                        CASE WHEN MAX(CASE WHEN b.bulan = 3 THEN 1 ELSE 0 END) = 1 THEN "X" ELSE "" END AS maret,
-                        CASE WHEN MAX(CASE WHEN b.bulan = 4 THEN 1 ELSE 0 END) = 1 THEN "X" ELSE "" END AS april,
-                        CASE WHEN MAX(CASE WHEN b.bulan = 5 THEN 1 ELSE 0 END) = 1 THEN "X" ELSE "" END AS mei,
-                        CASE WHEN MAX(CASE WHEN b.bulan = 6 THEN 1 ELSE 0 END) = 1 THEN "X" ELSE "" END AS juni,
-                        CASE WHEN MAX(CASE WHEN b.bulan = 7 THEN 1 ELSE 0 END) = 1 THEN "X" ELSE "" END AS juli,
-                        CASE WHEN MAX(CASE WHEN b.bulan = 8 THEN 1 ELSE 0 END) = 1 THEN "X" ELSE "" END AS agustus,
-                        CASE WHEN MAX(CASE WHEN b.bulan = 9 THEN 1 ELSE 0 END) = 1 THEN "X" ELSE "" END AS september,
-                        CASE WHEN MAX(CASE WHEN b.bulan = 10 THEN 1 ELSE 0 END) = 1 THEN "X" ELSE "" END AS oktober,
-                        CASE WHEN MAX(CASE WHEN b.bulan = 11 THEN 1 ELSE 0 END) = 1 THEN "X" ELSE "" END AS november,
-                        CASE WHEN MAX(CASE WHEN b.bulan = 12 THEN 1 ELSE 0 END) = 1 THEN "X" ELSE "" END AS desember,
-                        COUNT(b.id) AS jumkeg	
-                        from detailuraians as a left join `rencana_kegiatans` as b on b.detailuraian_id = a.id
-                        left join `bagsubags` as c on c.id = a.bagsubag_id
-                        GROUP BY a.nama,a.id;');
-
-        $pdf = Pdf::loadView('admin.detailkegiatan.pdf', compact('program','kegiatan','kro','ro','komponen','subkomponen','kodeakun','detailuraian','rencana'))->setPaper('F4', 'landscape');
-        return $pdf->stream('rencana.pdf');
+                        
+                        if ($request->bagian=='0'){
+                            $rencana = DB::select('select 
+                                            a.*,c.kode as bag,
+                                            CASE WHEN MAX(CASE WHEN b.bulan = 1 THEN 1 ELSE 0 END) = 1 THEN "X" ELSE "" END AS januari,
+                                            CASE WHEN MAX(CASE WHEN b.bulan = 2 THEN 1 ELSE 0 END) = 1 THEN "X" ELSE "" END AS februari,
+                                            CASE WHEN MAX(CASE WHEN b.bulan = 3 THEN 1 ELSE 0 END) = 1 THEN "X" ELSE "" END AS maret,
+                                            CASE WHEN MAX(CASE WHEN b.bulan = 4 THEN 1 ELSE 0 END) = 1 THEN "X" ELSE "" END AS april,
+                                            CASE WHEN MAX(CASE WHEN b.bulan = 5 THEN 1 ELSE 0 END) = 1 THEN "X" ELSE "" END AS mei,
+                                            CASE WHEN MAX(CASE WHEN b.bulan = 6 THEN 1 ELSE 0 END) = 1 THEN "X" ELSE "" END AS juni,
+                                            CASE WHEN MAX(CASE WHEN b.bulan = 7 THEN 1 ELSE 0 END) = 1 THEN "X" ELSE "" END AS juli,
+                                            CASE WHEN MAX(CASE WHEN b.bulan = 8 THEN 1 ELSE 0 END) = 1 THEN "X" ELSE "" END AS agustus,
+                                            CASE WHEN MAX(CASE WHEN b.bulan = 9 THEN 1 ELSE 0 END) = 1 THEN "X" ELSE "" END AS september,
+                                            CASE WHEN MAX(CASE WHEN b.bulan = 10 THEN 1 ELSE 0 END) = 1 THEN "X" ELSE "" END AS oktober,
+                                            CASE WHEN MAX(CASE WHEN b.bulan = 11 THEN 1 ELSE 0 END) = 1 THEN "X" ELSE "" END AS november,
+                                            CASE WHEN MAX(CASE WHEN b.bulan = 12 THEN 1 ELSE 0 END) = 1 THEN "X" ELSE "" END AS desember,
+                                            COUNT(b.id) AS jumkeg	
+                                            from detailuraians as a left join `rencana_kegiatans` as b on b.detailuraian_id = a.id
+                                            left join `bagsubags` as c on c.id = a.bagsubag_id
+                                            GROUP BY a.nama,a.id;');
+                            $pdf = Pdf::loadView('admin.detailkegiatan.pdf', compact('program','kegiatan','kro','ro','komponen','subkomponen','kodeakun','detailuraian','rencana'))->setPaper('F4', 'landscape');
+                            return $pdf->stream('rencana.pdf');
+                        }else{
+                            $rencanabagian = DB::select('select 
+                                            a.*,c.kode as bag,c.nama as bagiannya, b.kegiatan_id as kegiatannya,
+                                            CASE WHEN MAX(CASE WHEN b.bulan = 1 THEN 1 ELSE 0 END) = 1 THEN "X" ELSE "" END AS januari,
+                                            CASE WHEN MAX(CASE WHEN b.bulan = 2 THEN 1 ELSE 0 END) = 1 THEN "X" ELSE "" END AS februari,
+                                            CASE WHEN MAX(CASE WHEN b.bulan = 3 THEN 1 ELSE 0 END) = 1 THEN "X" ELSE "" END AS maret,
+                                            CASE WHEN MAX(CASE WHEN b.bulan = 4 THEN 1 ELSE 0 END) = 1 THEN "X" ELSE "" END AS april,
+                                            CASE WHEN MAX(CASE WHEN b.bulan = 5 THEN 1 ELSE 0 END) = 1 THEN "X" ELSE "" END AS mei,
+                                            CASE WHEN MAX(CASE WHEN b.bulan = 6 THEN 1 ELSE 0 END) = 1 THEN "X" ELSE "" END AS juni,
+                                            CASE WHEN MAX(CASE WHEN b.bulan = 7 THEN 1 ELSE 0 END) = 1 THEN "X" ELSE "" END AS juli,
+                                            CASE WHEN MAX(CASE WHEN b.bulan = 8 THEN 1 ELSE 0 END) = 1 THEN "X" ELSE "" END AS agustus,
+                                            CASE WHEN MAX(CASE WHEN b.bulan = 9 THEN 1 ELSE 0 END) = 1 THEN "X" ELSE "" END AS september,
+                                            CASE WHEN MAX(CASE WHEN b.bulan = 10 THEN 1 ELSE 0 END) = 1 THEN "X" ELSE "" END AS oktober,
+                                            CASE WHEN MAX(CASE WHEN b.bulan = 11 THEN 1 ELSE 0 END) = 1 THEN "X" ELSE "" END AS november,
+                                            CASE WHEN MAX(CASE WHEN b.bulan = 12 THEN 1 ELSE 0 END) = 1 THEN "X" ELSE "" END AS desember,
+                                            COUNT(b.id) AS jumkeg	
+                                            from detailuraians as a left join `rencana_kegiatans` as b on b.detailuraian_id = a.id
+                                            left join `bagsubags` as c on c.id = a.bagsubag_id
+                                            where a.bagsubag_id = '.$request->bagian.'
+                                            GROUP BY a.nama,a.id;');
+                            $pdf = Pdf::loadView('admin.detailkegiatan.pdfbagian', compact('program','kegiatan','kro','ro','komponen','subkomponen','kodeakun','detailuraian','rencanabagian'))->setPaper('F4', 'landscape');
+                            return $pdf->stream('rencana-per-bagian.pdf');
+                            // dd("dcc");
+        }   
     }
 
         public function exportbagian()

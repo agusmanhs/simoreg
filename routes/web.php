@@ -78,7 +78,7 @@ Route::domain('')->group(function () { // development
             Route::put('/{id}', [DetailkegiatanController::class, 'update'])->name('detailkegiatan.update');
             Route::delete('/{id}', [DetailkegiatanController::class, 'destroy'])->name('detailkegiatan.delete');
             
-            Route::get('/export', [DetailkegiatanController::class, 'export'])->name('detailkegiatan.export');
+            Route::post('/export', [DetailkegiatanController::class, 'export'])->name('detailkegiatan.export');
             Route::get('/exportbagian', [DetailkegiatanController::class, 'exportbagian'])->name('detailkegiatan.exportbagian');
         });
 

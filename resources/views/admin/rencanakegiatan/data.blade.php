@@ -1,4 +1,3 @@
-
 @foreach ($data as $key => $v)
     <tr class="text-start text-gray-600 fs-7">
         <td>
@@ -27,78 +26,106 @@
             </span>
         </td>
         <td>
-            <span class="fw-semibold btn me-3" data-bs-toggle="modal" data-bs-target="#update_realisasi{{ $v->id }}" >
+            <span class="fw-semibold btn me-3" data-bs-toggle="modal"
+                data-bs-target="#update_realisasi{{ $v->id }}">
                 @if ($v->tgl_realisasi)
                     <div class="badge badge-light-success">{{ $v->tgl_realisasi }}</div>
                 @else
                     <div class="badge badge-light-danger">Belum Terealisasi</div>
                 @endif
             </span>
-<!--begin::Modal - Adjust Balance-->
-									<div class="modal fade" id="update_realisasi{{ $v->id }}" tabindex="-1" aria-hidden="true">
-										<!--begin::Modal dialog-->
-										<div class="modal-dialog modal-dialog-centered mw-650px">
-											<!--begin::Modal content-->
-											<div class="modal-content">
-												<!--begin::Modal header-->
-												<div class="modal-header">
-													<!--begin::Modal title-->
-													<h2 class="fw-bold">Input Pelaksaan Kegiatan {{ $v->id }}</h2>
-													<!--end::Modal title-->
-													<!--begin::Close-->
-													<div id="kt_customers_export_close" class="btn btn-icon btn-sm btn-active-icon-primary">
-														<i class="ki-duotone ki-cross fs-1">
-															<span class="path1"></span>
-															<span class="path2"></span>
-														</i>
-													</div>
-													<!--end::Close-->
-												</div>
-												<!--end::Modal header-->
-												<!--begin::Modal body-->
-												<div class="modal-body scroll-y mx-5 mx-xl-15 my-7">
-													<!--begin::Form-->
-													<form id="kt_modal_new_target_form" class="form" action="{{ route('rencanakegiatan.update', $v->id) }}" method="POST"> 
-                                                        @csrf
-                                                        @method('PUT')
-														<!--begin::Input group-->
-                                                        <input type="hidden" value="{{ $v->id }}" name="id" id="formId">
-														<div class="fv-row mb-10">
-															<label for="" class="form-label">Tanggal Pelaksanaan</label>
-                                                            <input class="form-control tgl_realisasi" placeholder="Pick a date" id="tgl_realisasi" name="tgl_realisasi" value="{{ $v->tgl_realisasi ?? '' }}"/>
-														</div>
-														<div class="fv-row mb-10">
-															<label class="form-label">Biaya Kegiatan</label>
-                                                            <input type="text" class="form-control" placeholder="Biaya Kegiatan" name="biaya" id="biaya" maxlength="20" value="{{ $v->biaya ?? '' }}" />
-														</div>
-														<!--end::Input group-->
-														<!--begin::Input group-->
-														<div class="fv-row mb-10">
-															<label for="" class="form-label">Catatan</label>
-                                                            <textarea class="form-control" data-kt-autosize="true" id="catatan" name="catatan">{{ $v->catatan ?? '' }}</textarea>
-														</div>
-														<!--end::Input group-->
-														<!--begin::Actions-->
-														<div class="text-center">
-															<button type="reset" id="kt_customers_export_cancel" class="btn btn-light me-3">Discard</button>
-															<button type="submit" id="kt_modal_new_target_update" class="btn btn-primary">
+            <!--begin::Modal - Adjust Balance-->
+            <div class="modal fade update_realisasi_modal" id="update_realisasi{{ $v->id }}" tabindex="-1"
+                aria-hidden="true">
+                <!--begin::Modal dialog-->
+                <div class="modal-dialog modal-dialog-centered mw-650px">
+                    <!--begin::Modal content-->
+                    <div class="modal-content">
+                        <!--begin::Modal header-->
+                        <div class="modal-header">
+                            <!--begin::Modal title-->
+                            <h2 class="fw-bold">Input Pelaksaan Kegiatan {{ $v->id }}</h2>
+                            <!--end::Modal title-->
+                            <!--begin::Close-->
+                            <div id="kt_customers_export_close" class="btn btn-icon btn-sm btn-active-icon-primary">
+                                <i class="ki-duotone ki-cross fs-1">
+                                    <span class="path1"></span>
+                                    <span class="path2"></span>
+                                </i>
+                            </div>
+                            <!--end::Close-->
+                        </div>
+                        <!--end::Modal header-->
+                        <!--begin::Modal body-->
+                        <div class="modal-body scroll-y mx-5 mx-xl-15 my-7">
+                            <!--begin::Form-->
+                            <form id="kt_modal_new_target_form_{{ $v->id }}" class="form"
+                                action="{{ route('rencanakegiatan.update', $v->id) }}" method="POST">
+                                @csrf
+                                @method('PUT')
+                                <!--begin::Input group-->
+                                <input type="hidden" name="action" id="action_{{ $v->id }}" value="">
+                                <input type="hidden" value="{{ $v->id }}" name="id" id="formId">
+                                <div class="fv-row mb-10">
+                                    <label for="" class="form-label">Tanggal Pelaksanaan</label>
+                                    <input class="form-control tgl_realisasi" placeholder="Pick a date"
+                                        id="tgl_realisasi" name="tgl_realisasi"
+                                        value="{{ $v->tgl_realisasi ?? '' }}" />
+                                </div>
+                                <div class="fv-row mb-10">
+                                    <label class="form-label">Biaya Kegiatan</label>
+                                    <input type="text" class="form-control" placeholder="Biaya Kegiatan"
+                                        name="biaya" id="biaya" maxlength="20" value="{{ $v->biaya ?? '' }}" />
+                                </div>
+                                <!--end::Input group-->
+                                <!--begin::Input group-->
+                                <div class="fv-row mb-10">
+                                    <label for="" class="form-label">Catatan</label>
+                                    <textarea class="form-control" data-kt-autosize="true" id="catatan" name="catatan">{{ $v->catatan ?? '' }}</textarea>
+                                </div>
+                                <!--end::Input group-->
+                                <!--begin::Actions-->
+                                <div class="text-center">
+                                    {{-- <button type="discard" id="kt_customers_export_cancel" class="btn btn-light me-3">Discard</button> --}}
+                                    {{-- <button type="reset" id="kt_customers_export_cancel" class="btn btn-light me-3">Reset</button> --}}
+                                    {{-- <button type="submit" id="kt_modal_new_target_update" class="btn btn-primary">
 																<span class="indicator-label">Submit</span>
 																<span class="indicator-progress">Please wait... 
 																<span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
-															</button>
-														</div>
-														<!--end::Actions-->
-													</form>
-													<!--end::Form-->
-												</div>
-												<!--end::Modal body-->
-											</div>
-											<!--end::Modal content-->
-										</div>
-										<!--end::Modal dialog-->
-									</div>
-									<!--end::Modal - New Card-->
-            
+															</button> --}}
+                                    @if ($v->tgl_realisasi)
+                                    <button type="button" id="kt_modal_new_target_null_{{ $v->id }}"
+                                        class="btn btn-danger"
+                                        onclick="setAction('{{ $v->id }}', 'set_null', event)">
+                                        <span class="indicator-label">Hapus Realisasi</span>
+                                        <span class="indicator-progress">Please wait...
+                                            <span
+                                                class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+                                    </button>
+                                    @endif
+
+                                    <button type="button" id="kt_modal_new_target_update_{{ $v->id }}"
+                                        class="btn btn-primary me-3"
+                                        onclick="setAction('{{ $v->id }}', 'update', event)">
+                                        <span class="indicator-label">Update</span>
+                                        <span class="indicator-progress">Please wait...
+                                            <span
+                                                class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+                                    </button>
+
+                                </div>
+                                <!--end::Actions-->
+                            </form>
+                            <!--end::Form-->
+                        </div>
+                        <!--end::Modal body-->
+                    </div>
+                    <!--end::Modal content-->
+                </div>
+                <!--end::Modal dialog-->
+            </div>
+            <!--end::Modal - New Card-->
+
         </td>
 
         <td class="text-end">
@@ -122,13 +149,54 @@
             </div> --}}
             <!--end::Menu-->
         </td>
-        
+
     </tr>
-
-    
-
 @endforeach
 
-    <script>
+<script>
+    document.querySelectorAll('.update_realisasi_modal').forEach(modal => {
+        modal.addEventListener('shown.bs.modal', function() {
+            modal.querySelectorAll('.tgl_realisasi').forEach(el => {
+                if (el._flatpickr) {
+                    el._flatpickr.destroy();
+                }
+                flatpickr(el, {
+                    dateFormat: "Y-m-d"
+                });
+            });
+        });
+    });
+
+
+
+    function setAction(id, action, e) {
+        e.preventDefault();
+        document.getElementById('action_' + id).value = action;
+
+        // Jika action adalah set_null, konfirmasi dulu
+        if (action === 'set_null') {
+            Swal.fire({
+                title: "Apakah Anda yakin?",
+                text: "Data akan disetel ke NULL!",
+                icon: "warning",
+                showCancelButton: true,
+                cancelButtonText: "Batal",
+                confirmButtonText: "Ya, set null",
+                customClass: {
+                    cancelButton: "btn btn-secondary",
+                    confirmButton: "btn btn-danger"
+                },
+                buttonsStyling: false,
+                reverseButtons: true
+            }).then((result) => {
+                if (result.isConfirmed) {
+
+                    document.getElementById('kt_modal_new_target_form_' + id).submit();
+                }
+            });
+        } else {
+            document.getElementById('kt_modal_new_target_form_' + id).submit();
+        }
         $(".tgl_realisasi").flatpickr();
-    </script>
+    }
+</script>

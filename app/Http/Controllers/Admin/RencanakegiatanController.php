@@ -30,13 +30,26 @@ class RencanakegiatanController extends Controller
     public function data(Request $request)
     {
         try {
+            // dd($request->all());
             $title = $this->title;
-            if($request->bulan==""){
-
+            $hasFilter = !empty($request->bulan) || (!empty($request->kabag) && $request->kabag !== 'all');
+        
+            if(!$hasFilter){
                 $data = $this->repo->paginated($request->all());
             }else{
+                // $data = $this->repo->filter([
+                //     'filter'=>$request->bulan,
+                //     'fieldx'=>'bulan',
+                //     'kabag' => $request->kabag,
+                //     'kabagx' => 'bagsubag_id',
+                //     'per_page' => $request->per_page ?? 5
+                // ]);
+                $data = $this->repo->filter([
+                'filter' => $request->bulan,        // untuk bulan
+                'bagsubag' => $request->kabag,   // untuk bagsubag_id
+                'per_page' => $request->per_page ?? 5
+            ]);
 
-                $data = $this->repo->filter(['filter'=>$request->bulan,'fieldx'=>'bulan']);
             }
 
             $perPage = $request->per_page == '' ? 5 : $request->per_page;
@@ -88,16 +101,20 @@ class RencanakegiatanController extends Controller
     {
         try {
             $req = $request->all();
-            if(isset($req['tgl_realisasi'])){
-                // dd($req['id']);
-                // $data = RencanaKegiatan::findOrFail($req['id']);
-                // $data->update([
-                //     'tgl_realisasi' => $req['tgl_realisasi'],
-                //     'catatan' => $req['catatan']
-                // ]);
-                $data = $this->repo->update($req, $request->id);
-                return redirect()->back()->with('success' , 'success');
+            $action = $request->input('action');
 
+            if(isset($req['tgl_realisasi'])){        
+                if ($action === 'update') {
+                    $data = $this->repo->update($req, $request->id);
+                    return redirect()->back()->with('success' , 'success');
+                }elseif($action === 'set_null'){
+                    $data = $this->repo->update([
+                        'tgl_realisasi' => null,
+                        'biaya' => null,
+                        'catatan' => null,
+                    ], $request->id);
+                    return redirect()->back()->with('success' , 'success');
+                }
             }else{
                 $data = $this->repo->update($req, $request->id);
             }

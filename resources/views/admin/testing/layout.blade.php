@@ -3118,7 +3118,7 @@
                             const e = document.querySelector('[data-kt-ecommerce-order-filter="anu"]');
                             $(e).on("change", (e => {
                                 let o = e.target.value;
-                                "all" === o && (o = ""), t.column(3).search(o).draw()
+                                "all" === o && (o = ""), t.column(4).search(o).draw()
                             }))
                         })())
                 }
